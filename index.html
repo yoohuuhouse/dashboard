@@ -254,7 +254,7 @@ tr.tr-req   td { background: #fff8f8; }
 
 <script>
 // ════════════════════════════════════════════════════════════════════════════
-// RESERVATION DATA  (스프레드시트 8/18 스냅샷 + 8/18 이메일 확인분)
+// RESERVATION DATA  (스프레드시트 8/19 스냅샷 · 8/19 이메일 반영)
 // note: '' | '이메일확인' | '예약요청중' | '퇴실완료_점검필요' | '퇴실완료' | '취소*'
 // ════════════════════════════════════════════════════════════════════════════
 const RS = [
@@ -802,7 +802,7 @@ function render() {
   const todayD   = d(todayStr);
   const k = kst();
   document.getElementById('hdr-meta').textContent =
-    `${k.getFullYear()}텄 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 8/18 스냅샷 · 8/18 이메일 반영`;
+    `${k.getFullYear()}텄 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 8/19 스냅샷 · 8/19 이메일 반영`;
 
   // ── Alerts ──────────────────────────────────────────────────────────────
   let aHTML = '';
