@@ -211,6 +211,7 @@ tr.tr-req   td { background: #fff8f8; }
 </div>
 
 <div id="panel-week" class="panel active">
+  <div id="new-reservations"></div>
   <div id="alert-area"></div>
   <div id="week-content"></div>
 </div>
@@ -687,13 +688,6 @@ function render() {
       </div>`;
     }
   }
-  const checkNeeded = RS.filter(r => r.note === '퇴실완료_점검필요');
-  if (checkNeeded.length) {
-    aHTML += `<div class="alert" style="background:#fff7ed;border-color:#fed7aa">
-      <div class="alert-title" style="color:#c2410c">⚡ 퇴실 점검 미완료 (${checkNeeded.length}건)</div>
-      <div class="alert-body">${checkNeeded.map(r=>`<b>${r.room} · ${r.guest}</b>`).join(', ')} — 삼삼엠투 앱 → [계약] → [퇴실 점검하기]</div>
-    </div>`;
-  }
   const emailOnlyMissing = RS.filter(r => r.ss_missing === true);
   if (emailOnlyMissing.length > 0) {
     aHTML += `<div class="alert" style="background:#fffbeb;border-color:#fde68a">
@@ -852,7 +846,25 @@ async function loadAlerts() {
   }
 }
 
+async function loadNewReservations() {
+  const el = document.getElementById('new-reservations');
+  if (!el) return;
+  if (!window.cowork) { el.innerHTML = ''; return; }
+  try {
+    const r = await window.cowork.callMcpTool('mcp__09738d3d-0b5e-4451-abbb-3521015cd178__search_threads', {query: 'from:(33m2@spacev.kr OR contact@liveanywhere.me) newer_than:7d', pageSize: 20});
+    const data = r.structuredContent ?? JSON.parse(r.content?.[0]?.text ?? '{}');
+    const threads = (data.threads ?? []).filter(t => { const s = t.messages?.[0]?.subject ?? ''; const p = t.messages?.[0]?.snippet ?? ''; return !['퇴실점검','리뷰요청','정산','결제'].some(k => s.includes(k)||p.includes(k)); });
+    if (!threads.length) { el.innerHTML = ''; return; }
+    const sums = threads.map(t => '제목: '+(t.messages?.[0]?.subject??'')+' / 내용: '+(t.messages?.[0]?.snippet??'')).join(' ||| ');
+    const parsed = await window.cowork.askClaude('다음 예약 이메일에서 지점명, 게스트이름, 입실일자(YYYY-MM-DD), 퇴실일자(YYYY-MM-DD), 플랫폼명을 추출해서 JSON 배열로만 반환. 예: [{"room":"여수남산","guest":"홍길동","in":"2026-08-20","out":"2026-08-25","platform":"삼삼얠투"}]. 확인 불가는 제외.\n\n'+sums, []);
+    let rs = []; try { const m = parsed.match(/\[[\s\S]*?\]/); if(m) rs = JSON.parse(m[0]); } catch(e) {}
+    if (!rs.length) { el.innerHTML = ''; return; }
+    el.innerHTML = '<div class="alert" style="background:#f0fdf4;border-color:#86efac;margin-bottom:10px"><div class="alert-title" style="color:#166534">🆕 지난 7일 신규예약 ('+rs.length+'건)</div><div class="alert-body">'+rs.map(r=>'<b>'+(r.room||'-')+'</b> / '+(r.guest||'-')+' / '+((r.in||'').slice(5))+'~'+((r.out||'').slice(5))+' / '+(r.platform||'-')).join('<br>')+'</div></div>';
+  } catch(e) { el.innerHTML = ''; }
+}
+
 render();
+loadNewReservations();
 </script>
 </body>
 </html>
