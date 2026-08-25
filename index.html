@@ -238,7 +238,7 @@ tr.tr-req   td { background: #fff8f8; }
 // note: '' | '이메일확인' | '예약요청중' | '퇴실완료_점검필요' | '퇴실완료' | '취소'
 // ════════════════════════════════════════════════════════════════════════════
 const RS = [
-  // ── 1-5월 (퇴실완료) ───────────────────────────────────────────────────
+  // ── 1-5월 (퇴실완료) ────────────────────────────────────────────────────
   {room:'속초금호',    in:'2026-01-01', out:'2026-01-30', guest:'김희주',   p:'리브애니웨어', amt:1236000, note:'퇴실완료'},
   {room:'전주완산',    in:'2026-01-01', out:'2026-01-23', guest:'김민정',   p:'리브애니웨어', amt:726000,  note:'퇴실완료'},
   {room:'영주순흥',    in:'2026-01-04', out:'2026-01-17', guest:'한주원',   p:'삼삼엠투',    amt:734920,  note:'퇴실완료'},
@@ -275,7 +275,7 @@ const RS = [
   {room:'봉화춘양',    in:'2026-05-23', out:'2026-06-21', guest:'김동학',   p:'리브애니웨어', amt:911750,  note:'퇴실완료'},
   {room:'동해묵호',    in:'2026-05-24', out:'2026-05-30', guest:'박서숙',   p:'이벤트',       amt:290000,  note:'퇴실완료'},
   {room:'여수남산',    in:'2026-05-26', out:'2026-06-01', guest:'박소원',   p:'이벤트',       amt:290000,  note:'퇴실완료'},
-  // ── 6훔 ────────────────────────────────────────────────────────────────
+  // ── 6월 ────────────────────────────────────────────────────────────────
   {room:'제주함덕',    in:'2026-06-02', out:'2026-06-17', guest:'송진후',   p:'리브애니웨어', amt:1163750, note:'퇴실완료'},
   {room:'전주완산',    in:'2026-06-03', out:'2026-06-09', guest:'홍수미',   p:'리브애니웨어', amt:297836,  note:'퇴실완료'},
   {room:'동해묵호',    in:'2026-06-03', out:'2026-06-18', guest:'윤도식',   p:'리브애니웨어', amt:655545,  note:'퇴실완료'},
@@ -382,7 +382,7 @@ function switchTab(el) {
   if (name === 'clean')                   renderCleaningSchedule();
 }
 
-// ═══════════════════════════════════════════════════════════════════════════
+// ════════════════════════════════════════════════════════════════════════════
 // 연간 달력 — 스프레드시트 전체 데이터 (1~12월)
 // ════════════════════════════════════════════════════════════════════════════
 const RS_CAL = RS; // 동일 데이터 사용
@@ -461,7 +461,7 @@ function renderCalendar() {
     const roomRS = RS_CAL.filter(r => r.room === room && !isCancelled(r));
     for (const r of roomRS) {
       const s = dayIdx(r.in);
-      const e = dayIdx(r.out);
+      const e = dayIdx(r.out) + 1; // 퇴실일 당일 칸까지 포함
       const cs = Math.max(0, s);
       const ce = Math.min(days.length, e);
       if (ce <= cs) continue;
@@ -713,7 +713,7 @@ function render() {
                    ? '<span style="color:#d97706;font-size:11px;font-weight:700">✉ 이메일확인 · SS미등록</span>'
                    : r.note === '이메일확인' ? '<span style="color:#888;font-size:11px">✉ 이메일확인</span>'
                    : r.note === '예약요청중' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚠️ 예약요청중</span>'
-                   : r.note.startsWith('취소')  ? `!span style="color:#dc2626;font-size:11px">${r.note}</span>`
+                   : r.note.startsWith('취소')  ? `<span style="color:#dc2626;font-size:11px">${r.note}</span>`
                    : r.note === '퇴실완료_점검필요' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚡점검필요</span>'
                    : r.note === '퇴실완료' ? '<span style="color:#aaa;font-size:11px">퇴실완료</span>'
                    : '';
@@ -812,7 +812,7 @@ async function loadNewReservations() {
     el.innerHTML = `<div class="alert" style="background:#f0fdf4;border-color:#86efac;margin-bottom:10px">
       <div class="alert-title" style="color:#166534">🆕 지난 7일 신규예약 (${reservations.length}건)</div>
       <div class="alert-body">${reservations.map(r =>
-        `<b>${r.room ?? '-'}</b> / ${r.guest ?? '-'} / ${(r.in ?? '').slice(5)}}${(r.out ?? '').slice(5)} / ${r.platform ?? '-'}`
+        `<b>${r.room ?? '-'}</b> / ${r.guest ?? '-'} / ${(r.in ?? '').slice(5)}~${(r.out ?? '').slice(5)} / ${r.platform ?? '-'}`
       ).join('<br>')}</div>
     </div>`;
   } catch(e) {
