@@ -17,250 +17,177 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>유휴하우스 예약현황</title>
 <style>
-/* ── Design tokens ── */
-:root {
-  color-scheme: light;
-  --bg: #ffffff;
-  --surface: #f5f5f7;
-  --surface-2: #ebebf0;
-  --txt: #1d1d1f;
-  --txt-2: #6e6e73;
-  --txt-3: #aeaeb2;
-  --blue: #0071e3;
-  --blue-light: #e8f2ff;
-  --green: #1c8b3c;
-  --green-bg: #e3f5eb;
-  --red: #c9232a;
-  --red-bg: #fef0f0;
-  --amber: #a85a00;
-  --amber-bg: #fef7e7;
-  --purple: #7033d4;
-  --purple-bg: #f0eafb;
-  --border: rgba(0,0,0,0.08);
-  --shadow: 0 1px 4px rgba(0,0,0,0.06), 0 0 1px rgba(0,0,0,0.06);
-  --radius: 12px;
-  --radius-sm: 8px;
-}
+:root { color-scheme: light; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-  background: var(--bg); color: var(--txt);
-  padding: 20px 16px 48px; font-size: 14px;
-  -webkit-font-smoothing: antialiased;
+  font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+  background: #fff; color: #111; padding: 16px 16px 40px; font-size: 14px;
 }
-
-/* ── Header ── */
-.hdr { margin-bottom: 20px; padding-bottom: 16px; border-bottom: 1px solid var(--border); }
-.hdr h1 { font-size: 20px; font-weight: 700; letter-spacing: -0.4px; color: var(--txt); }
-.hdr-meta { font-size: 12px; color: var(--txt-3); margin-top: 4px; letter-spacing: 0; }
-
-/* ── Segmented control tabs ── */
-.tabs {
-  display: flex; background: var(--surface); border-radius: 10px;
-  padding: 3px; margin-bottom: 20px; gap: 2px;
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
-}
+.hdr { margin-bottom: 18px; }
+.hdr h1 { font-size: 18px; font-weight: 700; letter-spacing: -0.3px; }
+.hdr-meta { font-size: 11px; color: #999; margin-top: 4px; }
+.tabs { display: flex; border-bottom: 1.5px solid #e5e7eb; margin-bottom: 18px; }
 .tab {
-  flex: 1; padding: 7px 10px; font-size: 12px; font-weight: 500;
-  cursor: pointer; color: var(--txt-2); border-radius: 8px;
-  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
-  text-align: center; white-space: nowrap; min-width: max-content;
-  -webkit-tap-highlight-color: transparent;
+  padding: 7px 14px; font-size: 13px; font-weight: 500; cursor: pointer;
+  color: #999; border-bottom: 2px solid transparent; margin-bottom: -1.5px;
+  transition: color 0.15s;
 }
-.tab.active {
-  color: var(--txt); background: var(--bg); font-weight: 600;
-  box-shadow: var(--shadow);
-}
+.tab.active { color: #111; border-bottom-color: #111; font-weight: 600; }
 .panel { display: none; }
-.panel.active { display: block; animation: fadeUp 0.2s ease; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes spin { to { transform: rotate(360deg); } }
-
-/* ── Alert banners ── */
+.panel.active { display: block; }
 .alert {
-  background: var(--red-bg); border: 1px solid rgba(201,35,42,0.15);
-  border-radius: var(--radius); padding: 13px 15px; margin-bottom: 10px;
+  background: #fff5f5; border: 1px solid #fecaca; border-radius: 10px;
+  padding: 12px 14px; margin-bottom: 10px;
 }
-.alert-title { font-size: 12px; font-weight: 700; color: var(--red); margin-bottom: 5px; }
-.alert-body { font-size: 13px; color: #3a0a09; line-height: 1.55; }
+.alert-title { font-size: 12px; font-weight: 700; color: #dc2626; margin-bottom: 5px; }
+.alert-body { font-size: 13px; color: #333; line-height: 1.55; }
 .alert-body b { font-weight: 600; }
-
-/* ── Day section headers ── */
 .day-hdr {
-  font-size: 11px; font-weight: 600; color: var(--txt-3);
-  margin: 20px 0 8px 2px; display: flex; align-items: center; gap: 6px;
-  letter-spacing: 0.2px; text-transform: uppercase;
+  font-size: 11.5px; font-weight: 700; color: #777; margin: 16px 0 8px 2px;
+  display: flex; align-items: center; gap: 6px;
 }
-.day-hdr.today { color: var(--blue); }
+.day-hdr.today { color: #2563eb; }
 .day-hdr .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
-
-/* ── Cards ── */
 .card {
-  background: var(--bg); border-radius: var(--radius); padding: 12px 14px;
-  margin-bottom: 8px; display: flex; align-items: center; gap: 10px;
-  border: 1px solid var(--border); border-left: 3px solid transparent;
-  box-shadow: var(--shadow); transition: box-shadow 0.15s ease;
+  background: #f7f8fa; border-radius: 10px; padding: 11px 14px;
+  margin-bottom: 7px; display: flex; align-items: center; gap: 10px;
+  border-left: 3px solid transparent;
 }
-.card.c-in     { border-left-color: #28a745; }
+.card.c-in     { border-left-color: #22c55e; }
 .card.c-out    { border-left-color: #f59e0b; }
-.card.c-active { border-left-color: var(--blue); background: var(--blue-light); border-color: rgba(0,113,227,0.12); }
-.card.c-email  { border-left: 3px dashed #28a745; }
-.card.c-req    { border-left-color: var(--red); background: var(--red-bg); border-color: rgba(201,35,42,0.12); }
-.card.c-clean  { border-left-color: var(--purple); background: var(--purple-bg); border-color: rgba(112,51,212,0.12); }
+.card.c-active { border-left-color: #3b82f6; background: #f0f6ff; }
+.card.c-email  { border-left: 3px dashed #22c55e; }
+.card.c-req    { border-left-color: #ef4444; background: #fff8f8; }
 .card-info { flex: 1; min-width: 0; }
-.card-title { font-size: 13px; font-weight: 600; line-height: 1.35; color: var(--txt); }
-.card-sub   { font-size: 12px; color: var(--txt-2); margin-top: 3px; line-height: 1.4; }
-.card-amt   { font-size: 12px; color: var(--txt-2); white-space: nowrap; flex-shrink: 0; text-align: right; font-variant-numeric: tabular-nums; }
-
-/* ── Badges ── */
+.card-title { font-size: 13px; font-weight: 600; line-height: 1.3; }
+.card-sub { font-size: 12px; color: #666; margin-top: 3px; line-height: 1.4; }
+.card-amt { font-size: 12px; color: #888; white-space: nowrap; flex-shrink: 0; text-align: right; }
 .badge {
-  display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 600;
-  padding: 2.5px 8px; border-radius: 20px; white-space: nowrap; flex-shrink: 0;
-  letter-spacing: -0.1px;
+  display: inline-block; font-size: 10px; font-weight: 700;
+  padding: 2px 7px; border-radius: 20px; white-space: nowrap; flex-shrink: 0;
 }
-.b-in     { background: var(--green-bg); color: var(--green); }
-.b-out    { background: var(--amber-bg); color: var(--amber); }
-.b-active { background: var(--blue-light); color: var(--blue); }
-.b-33m2   { background: var(--purple-bg); color: var(--purple); }
-.b-live   { background: var(--green-bg); color: var(--green); }
-.b-ext    { background: var(--surface); color: var(--txt-2); }
-.b-req    { background: var(--red-bg); color: var(--red); }
-.b-email  { background: var(--green-bg); color: var(--green); border: 1px dashed rgba(28,139,60,0.35); }
-.b-clean  { background: var(--purple-bg); color: var(--purple); }
-
-/* ── Table ── */
-.tbl-wrap {
-  overflow-x: auto; -webkit-overflow-scrolling: touch;
-  border-radius: var(--radius); border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-}
+.b-in     { background: #dcfce7; color: #15803d; }
+.b-out    { background: #fef9c3; color: #a16207; }
+.b-active { background: #dbeafe; color: #1d4ed8; }
+.b-33m2   { background: #ede9fe; color: #6d28d9; }
+.b-live   { background: #d1fae5; color: #065f46; }
+.b-ext    { background: #f3f4f6; color: #555; }
+.b-req    { background: #fee2e2; color: #dc2626; }
+.b-email  { background: #f0fdf4; color: #166534; border: 1px dashed #86efac; }
+.card.c-clean { border-left-color: #a78bfa; background: #faf5ff; }
+.b-clean  { background: #ede9fe; color: #6d28d9; }
+.tbl-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 table { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 560px; }
 th {
-  text-align: left; padding: 9px 11px; background: var(--surface);
-  font-weight: 600; color: var(--txt-2); border-bottom: 1px solid var(--border);
-  white-space: nowrap; font-size: 11px; letter-spacing: 0.2px;
+  text-align: left; padding: 8px 10px; background: #f3f4f6;
+  font-weight: 600; color: #555; border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
 }
-td { padding: 9px 11px; border-bottom: 1px solid var(--surface); vertical-align: middle; }
-tr:last-child td { border-bottom: none; }
-tr.tr-active td { background: var(--blue-light); }
-tr.tr-week   td { background: var(--green-bg); }
-tr.tr-cancel td { opacity: 0.35; }
-tr.tr-req    td { background: var(--red-bg); }
-.tc-33m2  { color: var(--purple); font-weight: 600; }
-.tc-live  { color: var(--green); font-weight: 600; }
-.tc-ext   { color: var(--txt-2); }
-.tbl-legend { font-size: 11px; color: var(--txt-3); margin-top: 10px; }
+td { padding: 8px 10px; border-bottom: 1px solid #f3f4f6; vertical-align: middle; }
+tr.tr-active td { background: #eff6ff; }
+tr.tr-week  td { background: #f0fdf4; }
+tr.tr-cancel td { opacity: 0.4; }
+tr.tr-req   td { background: #fff8f8; }
+.tc-33m2   { color: #6d28d9; font-weight: 600; }
+.tc-live   { color: #065f46; font-weight: 600; }
+.tc-ext    { color: #888; }
+.tbl-legend { font-size: 11px; color: #aaa; margin-top: 10px; }
 
 /* ── 청소 일정 ── */
 .clean-section {
-  background: var(--green-bg); border: 1px solid rgba(28,139,60,0.2);
-  border-radius: var(--radius); padding: 15px 16px; margin-bottom: 18px;
+  background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 12px;
+  padding: 14px 16px; margin-bottom: 18px;
 }
 .clean-section-hdr {
-  font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 10px;
+  font-size: 13px; font-weight: 700; color: #15803d; margin-bottom: 10px;
   display: flex; align-items: center; gap: 6px;
 }
 .clean-item {
   display: flex; align-items: center; gap: 10px;
-  padding: 9px 12px; border-radius: var(--radius-sm); background: var(--bg);
-  margin-bottom: 6px; border: 1px solid rgba(28,139,60,0.15);
-  transition: opacity 0.2s; box-shadow: var(--shadow);
+  padding: 7px 10px; border-radius: 8px; background: #fff;
+  margin-bottom: 6px; border: 1px solid #d1fae5;
+  transition: opacity 0.2s;
 }
 .clean-item.done { opacity: 0.4; }
 .clean-item input[type="checkbox"] {
-  width: 17px; height: 17px; accent-color: var(--green); cursor: pointer; flex-shrink: 0;
+  width: 16px; height: 16px; accent-color: #16a34a; cursor: pointer; flex-shrink: 0;
 }
-.clean-room  { font-size: 13px; font-weight: 700; color: var(--txt); flex-shrink: 0; min-width: 70px; }
-.clean-dates { font-size: 12px; color: var(--txt-2); flex: 1; }
-.clean-gap   { font-size: 11px; color: var(--txt-3); white-space: nowrap; }
+.clean-room { font-size: 13px; font-weight: 700; color: #111; flex-shrink: 0; min-width: 70px; }
+.clean-dates { font-size: 12px; color: #444; flex: 1; }
+.clean-gap { font-size: 11px; color: #888; white-space: nowrap; }
 .clean-item.done .clean-room,
-.clean-item.done .clean-dates { text-decoration: line-through; color: var(--txt-3); }
-.clean-empty { font-size: 13px; color: rgba(28,139,60,0.5); }
-
-/* ── Notifications ── */
-.notif {
-  padding: 12px 14px; border-radius: var(--radius); margin-bottom: 8px;
-  background: var(--bg); border: 1px solid var(--border); box-shadow: var(--shadow);
-}
-.notif.unread {
-  background: var(--blue-light); border-color: rgba(0,113,227,0.15);
-  border-left: 3px solid var(--blue);
-}
-.notif-from { font-size: 11px; color: var(--txt-2); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
-.notif-subj { font-size: 13px; font-weight: 600; margin-bottom: 4px; color: var(--txt); }
-.notif-body { font-size: 12px; color: var(--txt-2); line-height: 1.5; }
-.notif-time { font-size: 10px; color: var(--txt-3); margin-top: 5px; }
-.unread-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--blue); flex-shrink: 0; }
-
-/* ── Misc ── */
-.empty { color: var(--txt-3); font-size: 13px; padding: 8px 2px; }
-.spin-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--txt-3); animation: bl 1.1s infinite; margin: 0 2px; }
+.clean-item.done .clean-dates { text-decoration: line-through; color: #aaa; }
+.clean-empty { font-size: 13px; color: #6ee7b7; }
+.notif { padding: 11px 13px; border-radius: 9px; margin-bottom: 8px; background: #f7f8fa; }
+.notif.unread { background: #f0f6ff; border-left: 3px solid #3b82f6; }
+.notif-from { font-size: 11px; color: #888; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.notif-subj { font-size: 13px; font-weight: 600; margin-bottom: 3px; }
+.notif-body { font-size: 12px; color: #555; line-height: 1.5; }
+.notif-time { font-size: 10px; color: #bbb; margin-top: 4px; }
+.unread-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #3b82f6; }
+.empty { color: #bbb; font-size: 13px; padding: 8px 2px; }
+.spin-dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: #ccc; animation: bl 1.1s infinite; margin: 0 2px; }
 .spin-dot:nth-child(2) { animation-delay: 0.18s; }
 .spin-dot:nth-child(3) { animation-delay: 0.36s; }
-@keyframes bl { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+@keyframes bl { 0%,80%,100%{opacity:.2}40%{opacity:1} }
 
 /* ── 연간 달력 ── */
-.cal-wrap {
-  display: flex; overflow: hidden;
-  border: 1px solid var(--border); border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
+.cal-wrap { display: flex; overflow: hidden; border: 1px solid #e5e7eb; border-radius: 10px; }
 .cal-labels {
-  flex-shrink: 0; width: 110px; z-index: 10; background: var(--bg);
-  border-right: 1px solid var(--border);
+  flex-shrink: 0; width: 110px; z-index: 10; background: #fff;
+  border-right: 2px solid #e5e7eb;
 }
 .cal-label-hdr {
-  height: 52px; background: var(--surface); border-bottom: 1px solid var(--border);
+  height: 52px; background: #f9fafb; border-bottom: 1px solid #e5e7eb;
   display: flex; align-items: flex-end; padding: 0 10px 6px;
-  font-size: 10px; font-weight: 700; color: var(--txt-3); letter-spacing: 0.5px;
+  font-size: 11px; font-weight: 700; color: #888;
 }
 .cal-label-row {
   height: 40px; display: flex; align-items: center;
-  padding: 0 10px; font-size: 12px; font-weight: 600; color: var(--txt);
-  border-bottom: 1px solid var(--surface); white-space: nowrap;
+  padding: 0 10px; font-size: 12px; font-weight: 600; color: #222;
+  border-bottom: 1px solid #f3f4f6; white-space: nowrap;
   overflow: hidden; text-overflow: ellipsis;
 }
 .cal-scroll { overflow-x: auto; flex: 1; }
 .cal-inner { position: relative; }
-.cal-month-hdr { display: flex; height: 26px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.cal-month-hdr { display: flex; height: 26px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
 .cal-month-cell {
-  flex-shrink: 0; font-size: 11px; font-weight: 700; color: var(--txt-2);
-  padding: 0 8px; line-height: 26px; border-right: 1px solid var(--border);
-  white-space: nowrap; overflow: hidden; background: var(--surface);
+  flex-shrink: 0; font-size: 11px; font-weight: 700; color: #444;
+  padding: 0 8px; line-height: 26px; border-right: 2px solid #d1d5db;
+  white-space: nowrap; overflow: hidden; background: #f9fafb;
 }
-.cal-day-hdr { display: flex; height: 26px; border-bottom: 1px solid var(--border); background: var(--surface); }
+.cal-day-hdr { display: flex; height: 26px; border-bottom: 1px solid #e5e7eb; background: #f9fafb; }
 .cal-day-cell {
   flex-shrink: 0; font-size: 10px; text-align: center; line-height: 26px;
-  color: var(--txt-3); border-right: 1px solid rgba(0,0,0,0.03);
+  color: #aaa; border-right: 1px solid #f0f0f0;
 }
-.cal-day-cell.weekend { color: rgba(255,59,48,0.45); }
-.cal-day-cell.is-today {
-  background: var(--blue); color: #fff; font-weight: 800; border-radius: 4px;
-}
-.cal-row { position: relative; height: 40px; border-bottom: 1px solid var(--surface); }
+.cal-day-cell.weekend { color: #fca5a5; }
+.cal-day-cell.is-today { background: #dbeafe; color: #1d4ed8; font-weight: 800; }
+.cal-row { position: relative; height: 40px; border-bottom: 1px solid #f3f4f6; }
 .cal-row-bg { display: flex; height: 100%; position: absolute; inset: 0; }
-.cal-cell { flex-shrink: 0; height: 100%; border-right: 1px solid rgba(0,0,0,0.025); }
-.cal-cell.weekend { background: rgba(0,0,0,0.012); }
-.cal-cell.is-today { background: rgba(0,113,227,0.06); }
-.cal-cell.month-end { border-right: 1px solid var(--border); }
+.cal-cell {
+  flex-shrink: 0; height: 100%;
+  border-right: 1px solid #f3f4f6;
+}
+.cal-cell.weekend { background: #fafafa; }
+.cal-cell.is-today { background: #eff6ff; }
+.cal-cell.month-end { border-right: 2px solid #e5e7eb; }
 .cal-bar {
-  position: absolute; top: 6px; height: 28px; border-radius: 6px;
-  display: flex; align-items: center; padding: 0 8px;
-  overflow: hidden; white-space: nowrap; cursor: default;
-  z-index: 2; box-sizing: border-box;
+  position: absolute; top: 6px; height: 28px;
+  border-radius: 5px; display: flex; align-items: center;
+  padding: 0 8px; overflow: hidden; white-space: nowrap;
+  cursor: default; z-index: 2; box-sizing: border-box;
 }
 .cal-bar-txt { font-size: 11px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; }
 .cal-today-line {
-  position: absolute; top: 0; bottom: 0; width: 1.5px;
-  background: var(--blue); z-index: 5; pointer-events: none; opacity: 0.7;
+  position: absolute; top: 0; bottom: 0; width: 2px;
+  background: #3b82f6; z-index: 5; pointer-events: none;
 }
 .cal-tooltip {
   display: none; position: fixed; z-index: 100;
-  background: rgba(29,29,31,0.92); color: #fff; border-radius: 10px;
-  padding: 9px 13px; font-size: 12px; line-height: 1.6;
-  pointer-events: none; max-width: 230px;
-  box-shadow: 0 8px 28px rgba(0,0,0,.22);
-  backdrop-filter: blur(8px);
+  background: #1e293b; color: #fff; border-radius: 8px;
+  padding: 8px 12px; font-size: 12px; line-height: 1.6;
+  pointer-events: none; max-width: 220px; box-shadow: 0 4px 16px rgba(0,0,0,.3);
 }
 .cal-bar:hover + .cal-tooltip,
 .cal-bar:hover ~ .cal-tooltip { display: block; }
@@ -307,7 +234,7 @@ tr.tr-req    td { background: var(--red-bg); }
 
 <script>
 // ════════════════════════════════════════════════════════════════════════════
-// RESERVATION DATA  (스프레드시트 8/23 스냅샷 + 8/23 이메일 확인분)
+// RESERVATION DATA  (스프레드시트 8/29 스냅샷 + 8/29 이메일 반영)
 // note: '' | '이메일확인' | '예약요청중' | '퇴실완료_점검필요' | '퇴실완료' | '취소'
 // ════════════════════════════════════════════════════════════════════════════
 const RS = [
@@ -368,16 +295,18 @@ const RS = [
   {room:'여수당머리',  in:'2026-07-13', out:'2026-07-19', guest:'이상동',   p:'삼삼엠투',    amt:367460,  note:'퇴실완료'},
   {room:'단양어상천',  in:'2026-07-15', out:'2026-07-29', guest:'전병운',   p:'리브애니웨어', amt:602280,  note:'퇴실완료'},
   {room:'봉화춘양',    in:'2026-07-19', out:'2026-08-02', guest:'강동구',   p:'연장',         amt:450000,  note:'퇴실완료'},
-  {room:'단양어상천',  in:'2026-07-20', out:'2026-08-28', guest:'신기정',   p:'리브애니웨어', amt:0,       note:'취소'},
+  {room:'단양어상천',  in:'2026-07-20', out:'2026-08-28', guest:'신기정',   p:'리브애니웨어', amt:0,       note:'퇴실완료'},
   {room:'여수당머리',  in:'2026-07-22', out:'2026-07-28', guest:'최윤희',   p:'삼삼엠투',    amt:464160,  note:'퇴실완료'},
+  {room:'영주순흥',    in:'2026-07-23', out:'2026-07-29', guest:'김미영',   p:'삼삼엠투',    amt:0,       note:'퇴실완료'},
+  {room:'단양어상천',  in:'2026-07-23', out:'2026-08-05', guest:'조남신',   p:'삼삼엠투',    amt:0,       note:'퇴실완료'},
   {room:'여수남산',    in:'2026-07-25', out:'2026-07-31', guest:'김민규',   p:'리브애니웨어', amt:527982,  note:'퇴실완료'},
   {room:'영주순흥',    in:'2026-07-25', out:'2026-07-27', guest:'김세중',   p:'직계약',       amt:60000,   note:'퇴실완료'},
-  {room:'동해묵호',    in:'2026-07-25', out:'2026-07-31', guest:'이소연',   p:'삼삼엠투',    amt:425480,  note:'퇴실완료_점검필요'},
+  {room:'동해묵호',    in:'2026-07-25', out:'2026-07-31', guest:'이소연',   p:'삼삼엠투',    amt:425480,  note:'퇴실완료'},
   {room:'제주함덕',    in:'2026-07-26', out:'2026-08-16', guest:'신재범',   p:'리브애니웨어', amt:1621250, note:'퇴실완료'},
   {room:'영주순흥',    in:'2026-07-27', out:'2026-08-01', guest:'곽동한',   p:'직계약',       amt:536800,  note:'퇴실완료'},
-  {room:'여수당머리',  in:'2026-07-28', out:'2026-08-03', guest:'로기다',   p:'삼삼엠투',    amt:464160,  note:'퇴실완료_점검필요'},
+  {room:'여수당머리',  in:'2026-07-28', out:'2026-08-03', guest:'로기다',   p:'삼삼엠투',    amt:464160,  note:'퇴실완료'},
   {room:'여수당머리',  in:'2026-07-29', out:'2026-08-11', guest:'정재연',   p:'삼삼엠투',    amt:772000,  note:'취소'},
-  {room:'전주완산',    in:'2026-07-30', out:'2026-09-27', guest:'하주미',   p:'리브애니웨어', amt:1940769, note:'이메일확인'},
+  {room:'전주완산',    in:'2026-07-30', out:'2026-09-27', guest:'하주미',   p:'리브애니웨어', amt:1940769, note:''},
   {room:'단양어상천',  in:'2026-07-31', out:'2026-08-06', guest:'한다영',   p:'리브애니웨어', amt:415810,  note:'퇴실완료'},
   // ── 8월 ────────────────────────────────────────────────────────────────
   {room:'여수남산',    in:'2026-08-01', out:'2026-08-07', guest:'이준우',   p:'삼삼엠투',    amt:425480,  note:'퇴실완료'},
@@ -389,27 +318,28 @@ const RS = [
   {room:'여수남산',    in:'2026-08-08', out:'2026-08-14', guest:'정준수',   p:'삼삼엠투',    amt:425480,  note:'퇴실완료_점검필요'},
   {room:'동해묵호',    in:'2026-08-08', out:'2026-08-14', guest:'오승현',   p:'리브애니웨어', amt:500906,  note:'퇴실완료'},
   {room:'영주순흥',    in:'2026-08-09', out:'2026-08-30', guest:'곽동한',   p:'직계약',       amt:536800,  note:''},
-  {room:'영주순흥',    in:'2026-07-23', out:'2026-07-29', guest:'김미영',   p:'삼삼엠투',    amt:0,       note:'취소'},
-  {room:'단양어상천',  in:'2026-07-23', out:'2026-08-05', guest:'조남신',   p:'삼삼엠투',    amt:0,       note:'취소'},
-  {room:'단양단성',    in:'2026-08-12', out:'2026-09-11', guest:'김미경',   p:'리브애니웨어', amt:0,       note:'취소'},
-  {room:'단양어상천',  in:'2026-08-12', out:'2026-09-08', guest:'심우리',   p:'삼삼엠투',    amt:957330,  note:'이메일확인'},
-  {room:'여수당머리',  in:'2026-08-14', out:'2026-09-12', guest:'장민희',   p:'리브애니웨어', amt:0,       note:'취소'},
+  {room:'단양단성',    in:'2026-08-12', out:'2026-09-11', guest:'김미경',   p:'리브애니웨어', amt:0,       note:''},
+  {room:'단양어상천',  in:'2026-08-12', out:'2026-09-08', guest:'심우리',   p:'삼삼엠투',    amt:957330,  note:''},
+  {room:'여수당머리',  in:'2026-08-14', out:'2026-09-12', guest:'장민희',   p:'리브애니웨어', amt:0,       note:''},
   {room:'봉화춘양',    in:'2026-08-17', out:'2026-09-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
-  {room:'제주함덕',    in:'2026-08-17', out:'2026-08-31', guest:'정혜인',   p:'리브애니웨어', amt:1087500, note:'이메일확인'},
-  {room:'동해묵호',    in:'2026-08-23', out:'2026-08-29', guest:'이아미',   p:'리브애니웨어', amt:442886,  note:'이메일확인'},
-  {room:'여수남산',    in:'2026-08-24', out:'2026-09-14', guest:'김문길',   p:'리브애니웨어', amt:870059,  note:'이메일확인'},
+  {room:'제주함덕',    in:'2026-08-17', out:'2026-08-31', guest:'정혜인',   p:'리브애니웨어', amt:1087500, note:''},
+  {room:'동해묵호',    in:'2026-08-23', out:'2026-08-29', guest:'이아미',   p:'리브애니웨어', amt:442886,  note:''},
+  {room:'여수남산',    in:'2026-08-24', out:'2026-09-14', guest:'김문길',   p:'리브애니웨어', amt:870059,  note:''},
   // ── 9-11월 ─────────────────────────────────────────────────────────────
   {room:'영주순흥',    in:'2026-09-01', out:'2026-10-26', guest:'유승아',   p:'삼삼엠투',    amt:1808290, note:'이메일확인'},
   {room:'제주함덕',    in:'2026-09-07', out:'2026-10-07', guest:'김종인',   p:'리브애니웨어', amt:1566540, note:''},
+  {room:'여수당머리',  in:'2026-09-11', out:'2026-09-14', guest:'문승규',   p:'',             amt:0,       note:'', ss_missing:true},
   {room:'봉화춘양',    in:'2026-09-17', out:'2026-10-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
-  {room:'단양어상천',  in:'2026-09-17', out:'2026-10-31', guest:'강수현',   p:'리브애니웨어', amt:1331688, note:'이메일확인'},
-  {room:'여수당머리',  in:'2026-09-23', out:'2026-09-29', guest:'이경진',   p:'삼삼엠투',    amt:512510,  note:'이메일확인'},
-  {room:'여수남산',    in:'2026-10-03', out:'2026-10-09', guest:'이용',     p:'삼삼엠투',    amt:473830,  note:'이메일확인'},
+  {room:'단양어상천',  in:'2026-09-17', out:'2026-10-31', guest:'강수현',   p:'리브애니웨어', amt:1331688, note:''},
+  {room:'여수당머리',  in:'2026-09-23', out:'2026-09-29', guest:'이경진',   p:'삼삼엠투',    amt:512510,  note:''},
+  {room:'단양단성',    in:'2026-10-01', out:'2026-11-08', guest:'허윤성',   p:'리브애니웨어', amt:1170715, note:'이메일확인'},
+  {room:'여수남산',    in:'2026-10-03', out:'2026-10-09', guest:'이용',     p:'삼삼엠투',    amt:473830,  note:''},
   {room:'여수남산',    in:'2026-10-10', out:'2026-10-23', guest:'정은지',   p:'삼삼엠투',    amt:820016,  note:''},
   {room:'여수당머리',  in:'2026-10-10', out:'2026-10-25', guest:'이명현',   p:'직방',         amt:879428,  note:''},
   {room:'제주함덕',    in:'2026-10-10', out:'2026-11-07', guest:'윤동욱',   p:'리브애니웨어', amt:1493209, note:''},
   {room:'봉화춘양',    in:'2026-10-17', out:'2026-11-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
   {room:'여수남산',    in:'2026-10-24', out:'2026-11-20', guest:'최공주',   p:'삼삼엠투',    amt:1158466, note:'이메일확인'},
+  {room:'제주함덕',    in:'2026-11-08', out:'2026-12-08', guest:'송지나',   p:'리브애니웨어', amt:1779280, note:'이메일확인'},
   {room:'봉화춘양',    in:'2026-11-17', out:'2026-12-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
 ];
 
@@ -488,6 +418,7 @@ function renderCalendar() {
     if (isCancelled(r)) return { bg: '#e5e7eb', txt: '#9ca3af' };
     if (isDone(r))      return { bg: '#94a3b8', txt: '#fff' };
     if (r.note === '예약요청중') return { bg: '#ef4444', txt: '#fff' };
+    if (r.ss_missing)   return { bg: '#f59e0b', txt: '#fff' };
     if (r.p === '삼삼엠투')    return { bg: '#7c3aed', txt: '#fff' };
     if (r.p === '리브애니웨어') return { bg: '#0d9488', txt: '#fff' };
     return { bg: '#374151', txt: '#fff' };
@@ -534,7 +465,7 @@ function renderCalendar() {
     const roomRS = RS_CAL.filter(r => r.room === room && !isCancelled(r));
     for (const r of roomRS) {
       const s = dayIdx(r.in);
-      const e = dayIdx(r.out) + 1; // 퇴실일 당일 칸까지 포함
+      const e = dayIdx(r.out);
       const cs = Math.max(0, s);
       const ce = Math.min(days.length, e);
       if (ce <= cs) continue;
@@ -542,9 +473,9 @@ function renderCalendar() {
       const { bg, txt } = barColor(r);
       const barW  = (ce - cs) * DAY_W - 3;
       const barL  = cs * DAY_W + 1;
-      const label = `${r.guest}${r.note === '이메일확인' ? ' ✉' : ''}${r.note === '예약요청중' ? ' ⚠️' : ''}`;
+      const label = `${r.guest}${r.note === '이메일확인' ? ' ✉' : ''}${r.note === '예약요청중' ? ' ⚠️' : ''}${r.ss_missing ? ' 📅' : ''}`;
       const amtStr = r.amt ? `₩${r.amt.toLocaleString('ko-KR')}` : '-';
-      const tipHTML = `${r.room} · ${r.guest}<br>${r.in} ~ ${r.out}<br>${r.p} · ${amtStr}${r.note ? '<br>' + r.note : ''}`;
+      const tipHTML = `${r.room} · ${r.guest}<br>${r.in} ~ ${r.out}<br>${r.p} · ${amtStr}${r.note ? '<br>' + r.note : ''}${r.ss_missing ? '<br>⚠️ 스프레드시트 미등록' : ''}`;
 
       bars += `<div class="cal-bar"
         style="left:${barL}px; width:${barW}px; background:${bg};"
@@ -577,7 +508,7 @@ function renderCalendar() {
       <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#0d9488;vertical-align:middle;margin-right:4px"></span>리브애니웨어</span>
       <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#374151;vertical-align:middle;margin-right:4px"></span>직계약/연장/기타</span>
       <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#94a3b8;vertical-align:middle;margin-right:4px"></span>퇴실완료</span>
-      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#ef4444;vertical-align:middle;margin-right:4px"></span>예약요청중</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#f59e0b;vertical-align:middle;margin-right:4px"></span>📅 캘린더전용(SS미등록)</span>
     </div>
     <div id="cal-tip" class="cal-tooltip"></div>`;
 
@@ -680,7 +611,7 @@ function render() {
   const todayD   = d(todayStr);
   const k = kst();
   document.getElementById('hdr-meta').textContent =
-    `${k.getFullYear()}년 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 8/23 스냅샷 · 8/23 이메일 반영`;
+    `${k.getFullYear()}년 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 8/29 스냅샷 · 8/29 이메일 반영`;
 
   // ── Alerts ──────────────────────────────────────────────────────────────
   let aHTML = '';
@@ -697,7 +628,7 @@ function render() {
   if (emailOnlyMissing.length > 0) {
     aHTML += `<div class="alert" style="background:#fffbeb;border-color:#fde68a">
       <div class="alert-title" style="color:#d97706">⚠️ 스프레드시트 미등록 예약 ${emailOnlyMissing.length}건</div>
-      <div class="alert-body">이메일 확정됐으나 스프레드시트에 없음 — ${emailOnlyMissing.map(r=>`<b>${r.guest}</b> ${r.room} ${r.in.slice(5)}~${r.out.slice(5)}`).join(', ')}. 스프레드시트 업데이트 필요.</div>
+      <div class="alert-body">캘린더에만 등록됨 — ${emailOnlyMissing.map(r=>`<b>${r.guest}</b> ${r.room} ${r.in.slice(5)}~${r.out.slice(5)}`).join(', ')}. 스프레드시트 업데이트 필요.</div>
     </div>`;
   }
   document.getElementById('alert-area').innerHTML = aHTML;
@@ -737,7 +668,7 @@ function render() {
     for (const ds of allDays) {
       const isToday = ds === todayStr;
       const dt = d(ds);
-      const dayLabel = `${dt.getMonth()+1}월 ${dt.getDate()}일 (${WDAYS[dt.getDay()]})${isToday ? ' · 오늘' : ''}`;
+      const dayLabel = `${dt.getMonth()+1}월 ${dt.getDate()}܅� (${WDAYS[dt.getDay()]})${isToday ? ' · 오늘' : ''}`;
       wHTML += `<div class="day-hdr ${isToday ? 'today' : ''}"><span class="dot"></span>${dayLabel}</div>`;
       const dayEvents = [...(eventsByDay[ds] || [])].sort((a, b) => {
         const ord = {out: 0, in: 1};
@@ -753,8 +684,8 @@ function render() {
           : isMissingSS
             ? `<span class="badge b-email">${isIn ? '입실' : '퇴실'} ✉</span>`
             : isIn ? `<span class="badge b-in">입실</span>` : `<span class="badge b-out">퇴실</span>`;
-        const note = isMissingSS ? ' <span style="font-size:10px;color:#d97706">(이메일확인, 스프레드시트 미등록)</span>'
-                   : isReq       ? ' <span style="font-size:10px;color:#dc2626">(응답기한 확인 필요)</span>'
+        const note = isMissingSS ? ' <span style="font-size:10px;color:#d97706">(캘린더전용, 스프레드시트 미등록)</span>'
+          : '';                : isReq       ? ' <span style="font-size:10px;color:#dc2626">(응답기한 확인 필요)</span>'
                    : '';
         wHTML += `<div class="card ${cls}">
           ${badge}
@@ -783,7 +714,7 @@ function render() {
     const isReq  = r.note === '예약요청중';
     const cls = isCan ? 'tr-cancel' : isAct ? 'tr-active' : isWk ? 'tr-week' : isReq ? 'tr-req' : '';
     const noteHTML = r.ss_missing === true
-                   ? '<span style="color:#d97706;font-size:11px;font-weight:700">✉ 이메일확인 · SS미등록</span>'
+                   ? '<span style="color:#d97706;font-size:11px;font-weight:700">📅 캘린더전용 · SS미등록</span>'
                    : r.note === '이메일확인' ? '<span style="color:#888;font-size:11px">✉ 이메일확인</span>'
                    : r.note === '예약요청중' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚠️ 예약요청중</span>'
                    : r.note.startsWith('취소')  ? `<span style="color:#dc2626;font-size:11px">${r.note}</span>`
@@ -802,7 +733,7 @@ function render() {
   }
   tHTML += `</tbody></table></div>
     <div class="tbl-legend" style="margin-top:10px">
-      🟦 현재 입실중 &nbsp;🟩 2주 이내 입실 예정 &nbsp;취소건 회색 처리 &nbsp;✉ 이메일확인 &nbsp;⚠️ SS미등록
+      🟦 현재 입실중 &nbsp;🟩 2주 이내 입실 예정 &nbsp;취소건 회색 처리 &nbsp;✉ 이메일확인 &nbsp;📅 캘린더전용(SS미등록)
     </div>`;
   document.getElementById('all-content').innerHTML = tHTML;
 }
@@ -854,81 +785,42 @@ async function loadAlerts() {
 async function loadNewReservations() {
   const el = document.getElementById('new-reservations');
   if (!el) return;
-
-  // Loading state
-  el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:6px 2px 10px;display:flex;align-items:center;gap:6px">' +
-    '<span style="display:inline-block;width:10px;height:10px;border:2px solid var(--txt-3);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite"></span>' +
-    '최근 7일 신규예약 확인 중...</div>';
-
   if (!window.cowork) { el.innerHTML = ''; return; }
-
-  const SKIP_KW = ['퇴실점검','리뷰요청','정산','결제','보증금','환불','입실안내','퇴실안내','정기결제'];
-
   try {
     const r = await window.cowork.callMcpTool(
       'mcp__09738d3d-0b5e-4451-abbb-3521015cd178__search_threads',
-      {query: 'from:(33m2@spacev.kr OR contact@liveanywhere.me) newer_than:7d', pageSize: 30}
+      {query: 'from:(33m2@spacev.kr OR contact@liveanywhere.me) newer_than:7d', pageSize: 20}
     );
     const data = r.structuredContent ?? JSON.parse(r.content?.[0]?.text ?? '{}');
     const threads = (data.threads ?? []).filter(t => {
       const subj = t.messages?.[0]?.subject ?? '';
       const snip = t.messages?.[0]?.snippet ?? '';
-      return !SKIP_KW.some(k => subj.includes(k) || snip.includes(k));
+      const skip = ['퇴실점검', '리뷰요청', '정산', '결제'];
+      return !skip.some(k => subj.includes(k) || snip.includes(k));
     });
-
-    if (!threads.length) {
-      el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:4px 2px 12px">✅ 최근 7일 신규예약 없음</div>';
-      return;
-    }
-
-    const emailSummaries = threads.map((t, i) => {
+    if (!threads.length) { el.innerHTML = ''; return; }
+    const emailSummaries = threads.map(t => {
       const m = t.messages?.[0];
-      return `[${i+1}] 발신: ${m?.sender ?? ''}\n제목: ${m?.subject ?? ''}\n내용: ${m?.snippet ?? ''}`;
+      return `제목: ${m?.subject ?? ''}\n내용: ${m?.snippet ?? ''}`;
     }).join('\n---\n');
-
     const parsed = await window.cowork.askClaude(
-      '아래 이메일들 중 숙소 신규예약 확정 이메일만 골라서 지점명, 게스트이름, 입실일(YYYY-MM-DD), 퇴실일(YYYY-MM-DD), 플랫폼명을 JSON 배열로만 반환해줘. ' +
-      '퇴실알림·리뷰요청·정산·결제·입실안내 같은 이메일은 제외. 정보 불충분하면 제외. 반드시 JSON 배열만 출력.\n' +
-      '예시: [{"room":"여수남산","guest":"홍길동","in":"2026-08-20","out":"2026-08-25","platform":"삼삼엠투"}]\n\n' +
-      emailSummaries,
+      '다음 숙소 예약 이메일들에서 각각 지점명, 게스트이름, 입실일자(YYYY-MM-DD), 퇴실일자(YYYY-MM-DD), 플랫폼명을 추출해서 JSON 배열로만 반환해줘. 예: [{"room":"여수남산","guest":"홍길동","in":"2026-08-20","out":"2026-08-25","platform":"삼삼엠투"}]. 확인 불가는 제외. 반드시 JSON만 출력.\n\n' + emailSummaries,
       []
     );
-
     let reservations = [];
     try {
       const match = parsed.match(/\[[\s\S]*?\]/);
       if (match) reservations = JSON.parse(match[0]);
     } catch(e) {}
-
-    if (!reservations.length) {
-      el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:4px 2px 12px">✅ 최근 7일 신규예약 없음</div>';
-      return;
-    }
-
-    const rows = reservations.map(rv => {
-      const inRS = RS.some(s => s.guest === rv.guest && s.in === rv.in);
-      const statusTag = inRS
-        ? '<span style="font-size:10px;color:var(--txt-3);background:var(--surface);border-radius:4px;padding:1px 5px">SS등록됨</span>'
-        : '<span style="font-size:10px;color:var(--red);background:var(--red-bg);border-radius:4px;padding:1px 5px;font-weight:600">⚠ SS미등록</span>';
-      const plat = rv.platform ?? '-';
-      const badge = plat === '삼삼엠투'    ? '<span class="badge b-33m2">삼삼엠투</span>'
-                  : plat === '리브애니웨어' ? '<span class="badge b-live">리브애니웨어</span>'
-                  : `<span class="badge b-ext">${plat}</span>`;
-      return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;font-size:13px">
-        <b style="min-width:72px">${rv.room ?? '-'}</b>
-        <span>${rv.guest ?? '-'}</span>
-        <span style="color:var(--txt-2);font-size:12px">${(rv.in??'').slice(5)} ~ ${(rv.out??'').slice(5)}</span>
-        ${badge}${statusTag}
-      </div>`;
-    }).join('');
-
-    el.innerHTML = `<div class="alert" style="background:#f0fdf4;border-color:#86efac;margin-bottom:12px">
-      <div class="alert-title" style="color:#166534">🆕 최근 7일 신규예약 ${reservations.length}건</div>
-      <div class="alert-body" style="padding-top:4px">${rows}</div>
+    if (!reservations.length) { el.innerHTML = ''; return; }
+    el.innerHTML = `<div class="alert" style="background:#f0fdf4;border-color:#86efac;margin-bottom:10px">
+      <div class="alert-title" style="color:#166534">🆕 지난 7일 신규예약 (${reservations.length}건)</div>
+      <div class="alert-body">${reservations.map(r =>
+        `<b>${r.room ?? '-'}</b> / ${r.guest ?? '-'} / ${(r.in ?? '').slice(5)}~${(r.out ?? '').slice(5)} / ${r.platform ?? '-'}`
+      ).join('<br>')}</div>
     </div>`;
-
   } catch(e) {
-    el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:4px 2px 10px">신규예약 로드 실패 — 새로고침 해주세요</div>';
+    el.innerHTML = '';
   }
 }
 
