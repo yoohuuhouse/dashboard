@@ -74,6 +74,7 @@ body {
 .panel { display: none; }
 .panel.active { display: block; animation: fadeUp 0.2s ease; }
 @keyframes fadeUp { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes spin { to { transform: rotate(360deg); } }
 
 /* ── Alert banners ── */
 .alert {
@@ -853,42 +854,81 @@ async function loadAlerts() {
 async function loadNewReservations() {
   const el = document.getElementById('new-reservations');
   if (!el) return;
+
+  // Loading state
+  el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:6px 2px 10px;display:flex;align-items:center;gap:6px">' +
+    '<span style="display:inline-block;width:10px;height:10px;border:2px solid var(--txt-3);border-top-color:var(--blue);border-radius:50%;animation:spin 0.8s linear infinite"></span>' +
+    '최근 7일 신규예약 확인 중...</div>';
+
   if (!window.cowork) { el.innerHTML = ''; return; }
+
+  const SKIP_KW = ['퇴실점검','리뷰요청','정산','결제','보증금','환불','입실안내','퇴실안내','정기결제'];
+
   try {
     const r = await window.cowork.callMcpTool(
       'mcp__09738d3d-0b5e-4451-abbb-3521015cd178__search_threads',
-      {query: 'from:(33m2@spacev.kr OR contact@liveanywhere.me) newer_than:7d', pageSize: 20}
+      {query: 'from:(33m2@spacev.kr OR contact@liveanywhere.me) newer_than:7d', pageSize: 30}
     );
     const data = r.structuredContent ?? JSON.parse(r.content?.[0]?.text ?? '{}');
     const threads = (data.threads ?? []).filter(t => {
       const subj = t.messages?.[0]?.subject ?? '';
       const snip = t.messages?.[0]?.snippet ?? '';
-      const skip = ['퇴실점검', '리뷰요청', '정산', '결제'];
-      return !skip.some(k => subj.includes(k) || snip.includes(k));
+      return !SKIP_KW.some(k => subj.includes(k) || snip.includes(k));
     });
-    if (!threads.length) { el.innerHTML = ''; return; }
-    const emailSummaries = threads.map(t => {
+
+    if (!threads.length) {
+      el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:4px 2px 12px">✅ 최근 7일 신규예약 없음</div>';
+      return;
+    }
+
+    const emailSummaries = threads.map((t, i) => {
       const m = t.messages?.[0];
-      return `제목: ${m?.subject ?? ''}\n내용: ${m?.snippet ?? ''}`;
+      return `[${i+1}] 발신: ${m?.sender ?? ''}\n제목: ${m?.subject ?? ''}\n내용: ${m?.snippet ?? ''}`;
     }).join('\n---\n');
+
     const parsed = await window.cowork.askClaude(
-      '다음 숙소 예약 이메일들에서 각각 지점명, 게스트이름, 입실일자(YYYY-MM-DD), 퇴실일자(YYYY-MM-DD), 플랫폼명을 추출해서 JSON 배열로만 반환해줘. 예: [{"room":"여수남산","guest":"홍길동","in":"2026-08-20","out":"2026-08-25","platform":"삼삼엠투"}]. 확인 불가는 제외. 반드시 JSON만 출력.\n\n' + emailSummaries,
+      '아래 이메일들 중 숙소 신규예약 확정 이메일만 골라서 지점명, 게스트이름, 입실일(YYYY-MM-DD), 퇴실일(YYYY-MM-DD), 플랫폼명을 JSON 배열로만 반환해줘. ' +
+      '퇴실알림·리뷰요청·정산·결제·입실안내 같은 이메일은 제외. 정보 불충분하면 제외. 반드시 JSON 배열만 출력.\n' +
+      '예시: [{"room":"여수남산","guest":"홍길동","in":"2026-08-20","out":"2026-08-25","platform":"삼삼엠투"}]\n\n' +
+      emailSummaries,
       []
     );
+
     let reservations = [];
     try {
       const match = parsed.match(/\[[\s\S]*?\]/);
       if (match) reservations = JSON.parse(match[0]);
     } catch(e) {}
-    if (!reservations.length) { el.innerHTML = ''; return; }
-    el.innerHTML = `<div class="alert" style="background:#f0fdf4;border-color:#86efac;margin-bottom:10px">
-      <div class="alert-title" style="color:#166534">🆕 지난 7일 신규예약 (${reservations.length}건)</div>
-      <div class="alert-body">${reservations.map(r =>
-        `<b>${r.room ?? '-'}</b> / ${r.guest ?? '-'} / ${(r.in ?? '').slice(5)}~${(r.out ?? '').slice(5)} / ${r.platform ?? '-'}`
-      ).join('<br>')}</div>
+
+    if (!reservations.length) {
+      el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:4px 2px 12px">✅ 최근 7일 신규예약 없음</div>';
+      return;
+    }
+
+    const rows = reservations.map(rv => {
+      const inRS = RS.some(s => s.guest === rv.guest && s.in === rv.in);
+      const statusTag = inRS
+        ? '<span style="font-size:10px;color:var(--txt-3);background:var(--surface);border-radius:4px;padding:1px 5px">SS등록됨</span>'
+        : '<span style="font-size:10px;color:var(--red);background:var(--red-bg);border-radius:4px;padding:1px 5px;font-weight:600">⚠ SS미등록</span>';
+      const plat = rv.platform ?? '-';
+      const badge = plat === '삼삼엠투'    ? '<span class="badge b-33m2">삼삼엠투</span>'
+                  : plat === '리브애니웨어' ? '<span class="badge b-live">리브애니웨어</span>'
+                  : `<span class="badge b-ext">${plat}</span>`;
+      return `<div style="display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border);flex-wrap:wrap;font-size:13px">
+        <b style="min-width:72px">${rv.room ?? '-'}</b>
+        <span>${rv.guest ?? '-'}</span>
+        <span style="color:var(--txt-2);font-size:12px">${(rv.in??'').slice(5)} ~ ${(rv.out??'').slice(5)}</span>
+        ${badge}${statusTag}
+      </div>`;
+    }).join('');
+
+    el.innerHTML = `<div class="alert" style="background:#f0fdf4;border-color:#86efac;margin-bottom:12px">
+      <div class="alert-title" style="color:#166534">🆕 최근 7일 신규예약 ${reservations.length}건</div>
+      <div class="alert-body" style="padding-top:4px">${rows}</div>
     </div>`;
+
   } catch(e) {
-    el.innerHTML = '';
+    el.innerHTML = '<div style="font-size:12px;color:var(--txt-3);padding:4px 2px 10px">신규예약 로드 실패 — 새로고침 해주세요</div>';
   }
 }
 
