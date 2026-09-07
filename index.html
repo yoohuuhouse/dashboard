@@ -466,7 +466,7 @@ function renderCalendar() {
     const roomRS = RS_CAL.filter(r => r.room === room && !isCancelled(r));
     for (const r of roomRS) {
       const s = dayIdx(r.in);
-      const e = dayIdx(r.out);
+      const e = dayIdx(r.out) + 1;
       const cs = Math.max(0, s);
       const ce = Math.min(days.length, e);
       if (ce <= cs) continue;
