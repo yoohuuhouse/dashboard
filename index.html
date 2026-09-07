@@ -335,6 +335,7 @@ const RS = [
   {room:'동해묵호',    in:'2026-10-01', out:'2026-10-14', guest:'채민호',   p:'리브애니웨어', amt:665215,  note:'이메일확인'},
   {room:'여수남산',    in:'2026-10-03', out:'2026-10-09', guest:'이용',     p:'삼삼엠투',    amt:473830,  note:''},
   {room:'여수남산',    in:'2026-10-10', out:'2026-10-23', guest:'정은지',   p:'삼삼엠투',    amt:820016,  note:''},
+  {room:'여수당머리', in:'2026-10-03', out:'2026-10-09', guest:'이상원',   p:'리브애니웨어', amt:516378,  note:'이메일확인'},
   {room:'여수당머리',  in:'2026-10-10', out:'2026-10-25', guest:'이명현',   p:'직방',         amt:879428,  note:''},
   {room:'제주함덕',    in:'2026-10-10', out:'2026-11-07', guest:'윤동욱',   p:'리브애니웨어', amt:1493209, note:''},
   {room:'봉화춘양',    in:'2026-10-17', out:'2026-11-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
@@ -611,7 +612,7 @@ function render() {
   const todayD   = d(todayStr);
   const k = kst();
   document.getElementById('hdr-meta').textContent =
-    `${k.getFullYear()}년 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 9/7 스냅샷 · 9/7 이메일 반영`;
+    `${k.getFullYear()}년 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 9/7 스냅샷 · 9/7 이메일 반영 (이상원 추가)`;
 
   // ── Alerts ──────────────────────────────────────────────────────────────
   let aHTML = '';
