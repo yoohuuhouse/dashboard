@@ -686,7 +686,7 @@ function render() {
             ? `<span class="badge b-email">${isIn ? '입실' : '퇴실'} ✉</span>`
             : isIn ? `<span class="badge b-in">입실</span>` : `<span class="badge b-out">퇴실</span>`;
         const note = isMissingSS ? ' <span style="font-size:10px;color:#d97706">(캘린더전용, 스프레드시트 미등록)</span>'
-          : '';                : isReq       ? ' <span style="font-size:10px;color:#dc2626">(응답기한 확인 필요)</span>'
+          : isReq       ? ' <span style="font-size:10px;color:#dc2626">(응답기한 확인 필요)</span>'
                    : '';
         wHTML += `<div class="card ${cls}">
           ${badge}
