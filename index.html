@@ -2,7 +2,7 @@
 {
   "name": "Reservation Dashboard",
   "schemaVersion": 1,
-  "description": "유휴하우스 예약현황 대시보드 — 삼삼엠투·리브애니웨어 이번 주 입퇴실 일정, 전체 7-10월 예약 테이블, 실시간 이메일 알림",
+  "description": "유휴하우스 예약현황 대시보드 — 삼삼엠투·리브애니웨어 이번 주 입퇴실 일정, 전체 7-10월 예약 테이블, 실시간 이메일 반림",
   "mcpTools": [
     "mcp__09738d3d-0b5e-4451-abbb-3521015cd178__search_threads"
   ],
@@ -321,7 +321,7 @@ const RS = [
   {room:'단양단성',    in:'2026-08-12', out:'2026-09-11', guest:'김미경',   p:'리브애니웨어', amt:0,       note:''},
   {room:'단양어상천',  in:'2026-08-12', out:'2026-09-08', guest:'심우리',   p:'삼삼엠투',    amt:957330,  note:''},
   {room:'여수당머리',  in:'2026-08-14', out:'2026-09-12', guest:'장민희',   p:'리브애니웨어', amt:0,       note:''},
-  {room:'봉화춘양',    in:'2026-08-17', out:'2026-09-16', guest:'강동구',   p:'직계앷',       amt:900000,  note:''},
+  {room:'봉화춘양',    in:'2026-08-17', out:'2026-09-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
   {room:'제주함덕',    in:'2026-08-17', out:'2026-08-31', guest:'정혜인',   p:'리브애니웨어', amt:1087500, note:'퇴실완료'},
   {room:'동해묵호',    in:'2026-08-23', out:'2026-08-29', guest:'이아미',   p:'리브애니웨어', amt:442886,  note:'퇴실완료'},
   {room:'여수남산',    in:'2026-08-24', out:'2026-09-14', guest:'김문길',   p:'리브애니웨어', amt:870059,  note:''},
@@ -338,7 +338,7 @@ const RS = [
   {room:'여수남산',    in:'2026-10-10', out:'2026-10-23', guest:'정은지',   p:'삼삼엠투',    amt:820016,  note:''},
   {room:'여수당머리',  in:'2026-10-10', out:'2026-10-25', guest:'이명현',   p:'직방',         amt:879428,  note:''},
   {room:'제주함덕',    in:'2026-10-10', out:'2026-11-07', guest:'윤동욱',   p:'리브애니웨어', amt:1493209, note:''},
-  {room:'봉화춘양',    in:'2026-10-17', out:'2026-11-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
+  {room:'봉화춘양',    in:'2026-10-17', out:'2026-11-16', guest:'강동구',   p:'직계앴',       amt:900000,  note:''},
   {room:'여수남산',    in:'2026-10-24', out:'2026-11-20', guest:'최공주',   p:'삼삼엠투',    amt:1158466, note:'이메일확인'},
   {room:'제주함덕',    in:'2026-11-08', out:'2026-12-08', guest:'송지나',   p:'리브애니웨어', amt:1779280, note:'이메일확인'},
   {room:'봉화춘양',    in:'2026-11-17', out:'2026-12-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
@@ -472,7 +472,7 @@ function renderCalendar() {
       if (ce <= cs) continue;
 
       const { bg, txt } = barColor(r);
-      const barWB = (ce - cs) * DAY_W - 3;
+      const barW  = (ce - cs) * DAY_W - 3;
       const barL  = cs * DAY_W + 1;
       const label = `${r.guest}${r.note === '이메일확인' ? ' ✉' : ''}${r.note === '예약요청중' ? ' ⚠️' : ''}${r.ss_missing ? ' 📅' : ''}`;
       const amtStr = r.amt ? `₩${r.amt.toLocaleString('ko-KR')}` : '-';
@@ -505,7 +505,7 @@ function renderCalendar() {
       </div>
     </div>
     <div style="margin-top:10px; font-size:11px; color:#bbb; display:flex; gap:16px; flex-wrap:wrap">
-      <span><span style="display:inline-block;width:12px;height:12px;border-radius:30x;background:#7c3aed;vertical-align:middle;margin-right:4px"></span>삼삼엠투</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#7c3aed;vertical-align:middle;margin-right:4px"></span>삼삼엠투</span>
       <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#0d9488;vertical-align:middle;margin-right:4px"></span>리브애니웨어</span>
       <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#374151;vertical-align:middle;margin-right:4px"></span>직계약/연장/기타</span>
       <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#94a3b8;vertical-align:middle;margin-right:4px"></span>퇴실완료</span>
@@ -718,9 +718,8 @@ function render() {
                    ? '<span style="color:#d97706;font-size:11px;font-weight:700">📅 캘린더전용 · SS미등록</span>'
                    : r.note === '이메일확인' ? '<span style="color:#888;font-size:11px">✉ 이메일확인</span>'
                    : r.note === '예약요청중' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚠️ 예약요청중</span>'
-                   : r.note.startsWith('취소')  ? `
-<span style="color:#dc2626;font-size:11px">${r.note}</span>`
-                   : r.note === '퇴실완료_점검필요' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚡ 점검필요</span>'
+                   : r.note.startsWith('취소')  ? `!span style="color:#dc2626;font-size:11px">${r.note}</span>`
+                   : r.note === '퇴실완료_점검필요' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚡점검필요</span>'
                    : r.note === '퇴실완료' ? '<span style="color:#aaa;font-size:11px">퇴실완료</span>'
                    : '';
     tHTML += `<tr class="${cls}">
@@ -733,7 +732,7 @@ function render() {
       <td>${noteHTML}</td>
     </tr>`;
   }
-  tHTML = `${tHTML}</tbody></table></div>
+  tHTML += `</tbody></table></div>
     <div class="tbl-legend" style="margin-top:10px">
       🟦 현재 입실중 &nbsp;🟩 2주 이내 입실 예정 &nbsp;✉ 이메일확인 &nbsp;📅 캘린더전용(SS미등록)
     </div>`;
