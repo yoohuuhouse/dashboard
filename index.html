@@ -92,8 +92,6 @@ tr.tr-req   td { background: #fff8f8; }
 .tc-live   { color: #065f46; font-weight: 600; }
 .tc-ext    { color: #888; }
 .tbl-legend { font-size: 11px; color: #aaa; margin-top: 10px; }
-
-/* â”€â”€ ì²­ì†Œ ì¼ì • â”€â”€ */
 .clean-section {
   background: #f0fdf4; border: 1.5px solid #bbf7d0; border-radius: 12px;
   padding: 14px 16px; margin-bottom: 18px;
@@ -130,8 +128,6 @@ tr.tr-req   td { background: #fff8f8; }
 .spin-dot:nth-child(2) { animation-delay: 0.18s; }
 .spin-dot:nth-child(3) { animation-delay: 0.36s; }
 @keyframes bl { 0%,80%,100%{opacity:.2}40%{opacity:1} }
-
-/* â”€â”€ ì—°ê°„ ë‹¬ë ¥ â”€â”€ */
 .cal-wrap { display: flex; overflow: hidden; border: 1px solid #e5e7eb; border-radius: 10px; }
 .cal-labels {
   flex-shrink: 0; width: 110px; z-index: 10; background: #fff;
@@ -165,10 +161,7 @@ tr.tr-req   td { background: #fff8f8; }
 .cal-day-cell.is-today { background: #dbeafe; color: #1d4ed8; font-weight: 800; }
 .cal-row { position: relative; height: 40px; border-bottom: 1px solid #f3f4f6; }
 .cal-row-bg { display: flex; height: 100%; position: absolute; inset: 0; }
-.cal-cell {
-  flex-shrink: 0; height: 100%;
-  border-right: 1px solid #f3f4f6;
-}
+.cal-cell { flex-shrink: 0; height: 100%; border-right: 1px solid #f3f4f6; }
 .cal-cell.weekend { background: #fafafa; }
 .cal-cell.is-today { background: #eff6ff; }
 .cal-cell.month-end { border-right: 2px solid #e5e7eb; }
@@ -234,7 +227,7 @@ tr.tr-req   td { background: #fff8f8; }
 
 <script>
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// RESERVATION DATA  (ìŠ¤í”„ë ˆë“œì‹œíŠ¸ 9/9 ìŠ¤ëƒ…ìƒ· + 9/9 ì´ë©”ì¼ ë°˜ì˜)
+// RESERVATION DATA  (ìŠ¤í”„ë ˆë“œì‹œíŠ¸ 9/11 ìŠ¤ëƒ…ìƒ· + 9/11 ì´ë©”ì¼ ë°˜ì˜)
 // note: '' | 'ì´ë©”ì¼í™•ì¸' | 'ì˜ˆì•½ìš”ì²­ì¤‘' | 'í‡´ì‹¤ì™„ë£Œ_ì ê²€í•„ìš”' | 'í‡´ì‹¤ì™„ë£Œ' | 'ì·¨ì†Œ'
 // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 const RS = [
@@ -262,7 +255,7 @@ const RS = [
   {room:'ì œì£¼í•¨ë•',    in:'2026-04-22', out:'2026-05-06', guest:'ê¹€ë¯¼í™˜',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:1087500, note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ë´‰í™”ì¶˜ì–‘',    in:'2026-04-25', out:'2026-05-22', guest:'ê°•ë™êµ¬',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:870300,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ì „ì£¼ì™„ì‚°',    in:'2026-04-29', out:'2026-05-06', guest:'ì†ì§€ìš°',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:416700,  note:'í‡´ì‹¤ì™„ë£Œ'},
-  {room:'ì—¬ìˆ˜ë‚¨ì‚°',    in:'2026-04-30', out:'2026-05-06', guest:'ì–°í–¥ì£¼',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:502840,  note:'í‡´ì‹¤ì™„ë£Œ'},
+  {room:'ì—¬ìˆ˜ë‚¨ì‚°',    in:'2026-04-30', out:'2026-05-06', guest:'ì—°í–¥ì£¼',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:502840,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ì „ì£¼ì™„ì‚°',    in:'2026-05-07', out:'2026-05-20', guest:'ìœ¤ì„±í¬',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:546355,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ì—¬ìˆ˜ë‹¹ë¨¸ë¦¬',  in:'2026-05-09', out:'2026-05-15', guest:'ì¥í•´ëŠ˜',   p:'ì´ë²¤íŠ¸',       amt:290000,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ì œì£¼í•¨ë•',    in:'2026-05-11', out:'2026-05-17', guest:'í•œì†Œë‹´',   p:'ì´ë²¤íŠ¸',       amt:290000,  note:'í‡´ì‹¤ì™„ë£Œ'},
@@ -295,7 +288,7 @@ const RS = [
   {room:'ì—¬ìˆ˜ë‹¹ë¨¸ë¦¬',  in:'2026-07-13', out:'2026-07-19', guest:'ì´ìƒë™',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:367460,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ë‹¨ì–‘ì–´ìƒì²œ',  in:'2026-07-15', out:'2026-07-29', guest:'ì „ë³‘ìš´',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:602280,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ë´‰í™”ì¶˜ì–‘',    in:'2026-07-19', out:'2026-08-02', guest:'ê°•ë™êµ¬',   p:'ì—°ì¥',         amt:450000,  note:'í‡´ì‹¤ì™„ë£Œ'},
-  {room:'ë‹¨ì–‘ì–´ìƒì²œ',  in:'2026-07-20', out:'2026-08-28', guest:'ì‹ ê¸°ì •',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:0,       note:'í‡´ì‹¤ì™„ë£Œ'},
+  {room:'ë‹¨ì–‘ì–´ìƒì²œ',  in:'2026-07-20', out:'2026-08-28', guest:'ì‹ ê¸°ì •',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:0,       note:'ì·¨ì†Œ'},
   {room:'ì—¬ìˆ˜ë‹¹ë¨¸ë¦¬',  in:'2026-07-22', out:'2026-07-28', guest:'ìµœìœ¤í¬',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:464160,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ì˜ì£¼ìˆœí¥',    in:'2026-07-23', out:'2026-07-29', guest:'ê¹€ë¯¸ì˜',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:0,       note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ë‹¨ì–‘ì–´ìƒì²œ',  in:'2026-07-23', out:'2026-08-05', guest:'ì¡°ë‚¨ì‹ ',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:0,       note:'í‡´ì‹¤ì™„ë£Œ'},
@@ -318,9 +311,9 @@ const RS = [
   {room:'ì—¬ìˆ˜ë‚¨ì‚°',    in:'2026-08-08', out:'2026-08-14', guest:'ì •ì¤€ìˆ˜',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:425480,  note:'í‡´ì‹¤ì™„ë£Œ_ì ê²€í•„ìš”'},
   {room:'ë™í•´ë¬µí˜¸',    in:'2026-08-08', out:'2026-08-14', guest:'ì˜¤ìŠ¹í˜„',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:500906,  note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ì˜ì£¼ìˆœí¥',    in:'2026-08-09', out:'2026-08-30', guest:'ê³½ë™í•œ',   p:'ì§ê³„ì•½',       amt:536800,  note:'í‡´ì‹¤ì™„ë£Œ'},
-  {room:'ë‹¨ì–‘ë‹¨ì„±',    in:'2026-08-12', out:'2026-09-11', guest:'ê¹€ë¯¸ê²½',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:0,       note:''},
-  {room:'ë‹¨ì–‘ì–´ìƒì²œ',  in:'2026-08-12', out:'2026-09-08', guest:'ì‹¬ìš°ë¦¬',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:957330,  note:'í‡´ì‹¤ì™„ë£Œ'},
-  {room:'ì—¬ìˆ˜ë‹¹ë¨¸ë¦¬',  in:'2026-08-14', out:'2026-09-12', guest:'ì¥ë¯¼í¬',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:0,       note:''},
+  {room:'ë‹¨ì–‘ë‹¨ì„±',    in:'2026-08-12', out:'2026-09-11', guest:'ê¹€ë¯¸ê²½',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:0,       note:'ì·¨ì†Œ'},
+  {room:'ë‹¨ì–‘ì–´ìƒì²œ',  in:'2026-08-12', out:'2026-09-08', guest:'ì‹¬ìš°ë¦¬',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:957330,  note:'í‡´ì‹¤ì™„ë£Œ_ì ê²€í•„ìš”'},
+  {room:'ì—¬ìˆ˜ë‹¹ë¨¸ë¦¬',  in:'2026-08-14', out:'2026-09-12', guest:'ì¥ë¯¼í¬',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:0,       note:'ì·¨ì†Œ'},
   {room:'ë´‰í™”ì¶˜ì–‘',    in:'2026-08-17', out:'2026-09-16', guest:'ê°•ë™êµ¬',   p:'ì§ê³„ì•½',       amt:900000,  note:''},
   {room:'ì œì£¼í•¨ë•',    in:'2026-08-17', out:'2026-08-31', guest:'ì •í˜œì¸',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:1087500, note:'í‡´ì‹¤ì™„ë£Œ'},
   {room:'ë™í•´ë¬µí˜¸',    in:'2026-08-23', out:'2026-08-29', guest:'ì´ì•„ë¯¸',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:442886,  note:'í‡´ì‹¤ì™„ë£Œ'},
@@ -341,7 +334,7 @@ const RS = [
   {room:'ë´‰í™”ì¶˜ì–‘',    in:'2026-10-17', out:'2026-11-16', guest:'ê°•ë™êµ¬',   p:'ì§ê³„ì•½',       amt:900000,  note:''},
   {room:'ì—¬ìˆ˜ë‚¨ì‚°',    in:'2026-10-24', out:'2026-11-20', guest:'ìµœê³µì£¼',   p:'ì‚¼ì‚¼ì— íˆ¬',    amt:1158466, note:'ì´ë©”ì¼í™•ì¸'},
   {room:'ì œì£¼í•¨ë•',    in:'2026-11-08', out:'2026-12-08', guest:'ì†¡ì§€ë‚˜',   p:'ë¦¬ë¸Œì• ë‹ˆì›¨ì–´', amt:1779280, note:'ì´ë©”ì¼í™•ì¸'},
-  {room:'ë´‰í™”ì¶˜ì–‘',    in:'2026-11-17', out:'2026-12-16', guest:'ê°•ë™êµ¬',   p:'ì§ê³„ì•´',       amt:900000,  note:''},
+  {room:'ë´‰í™”ì¶˜ì–‘',    in:'2026-11-17', out:'2026-12-16', guest:'ê°•ë™êµ¬',   p:'ì§ê³„ì•½',       amt:900000,  note:''},
 ];
 
 const WDAYS = ['ì¼','ì›”','í™”','ìˆ˜','ëª©','ê¸ˆ','í† '];
@@ -386,15 +379,11 @@ function switchTab(el) {
   if (name === 'clean')                   renderCleaningSchedule();
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// ì—°ê°„ ë‹¬ë ¥ â€” ìŠ¤í”„ë ˆë“œì‹œíŠ¸ ì „ì²´ ë°ì´í„° (1~12ì›”)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-const RS_CAL = RS; // ë™ì¼ ë°ì´í„° ì‚¬ìš©
+const RS_CAL = RS;
 
 function renderCalendar() {
   const YEAR = 2026;
   const DAY_W = 28;
-  const ROW_H = 40;
   const MONTHS_KR = ['1ì›”','2ì›”','3ì›”','4ì›”','5ì›”','6ì›”','7ì›”','8ì›”','9ì›”','10ì›”','11ì›”','12ì›”'];
   const ROOMS_ORDER = ['ì†ì´ˆê¸ˆí˜¸','ì˜ì£¼ìˆœí¥','ë™í•´ë¬µí˜¸','ì—¬ìˆ˜ë‹¹ë¨¸ë¦¬','ë‹¨ì–‘ì–´ìƒì²œ','ë‹¨ì–‘ë‹¨ì„±','ë´‰í™”ì¶˜ì–‘','ì—¬ìˆ˜ë‚¨ì‚°','ì œì£¼í•¨ë•','ì „ì£¼ì™„ì‚°'];
   const extraRooms = [...new Set(RS_CAL.map(r => r.room))].filter(r => !ROOMS_ORDER.includes(r));
@@ -472,14 +461,49 @@ function renderCalendar() {
       if (ce <= cs) continue;
 
       const { bg, txt } = barColor(r);
-      const barWHH
-ÙHHÜÊH
-ˆVWÕÈHÎÂˆÛÛœİ˜\“HÜÈ
-ˆVWÕÈ
-ÈNÂˆÛÛœİX™[H	Ü‹™İY\İIÜ‹››İHOOH	Éû'm:êe;'o;fe{'n	ÈÈ	È8§"IÈˆ	ÉßIÜ‹››İHOOH	û&";%o{&¥;,«{)$IÈÈ	È:f¨;î#ÉÈˆ	ÉßIÜ‹œÜ×ÛZ\ÜÚ[™ÈÈ	È<'äáIÈˆ	ÉßXÂˆÛÛœİ[]İˆH‹˜[]È8 *IÜ‹˜[]ÓØØ[Tİš[™Ê	ÚÛËRÔ‰Ê_Xˆ	ËIÎÂˆÛÛœİ\SH	Ü‹œ›ÛÛ_H0­È	Ü‹™İY\İOœ‰Ü‹š[ŸHˆ	Ü‹›İ]Oœ‰Ü‹œH0­È	Ø[]İŸIÜ‹››İHÈ	Ïœ‰È
-È‹››İHˆ	ÉßIÜ‹œÜ×ÛZ\ÜÚ[™ÈÈ	Ïœ¸¦¨;î#È;"©;e!:â":äç2.s¶*àƒ®¾ã®NÇ®†tœ€è€œõ€ì((€€€€€‰…ÉÌ€¬ô€ñ‘¥Ø±…ÍÌô‰…°µ‰…Èˆ(€€€€€€€ÍÑå±”ô‰±•™Ğè‘í‰…É1õÁàìİ¥‘Ñ è‘í‰…É]õÁàì‰…­É½Õ¹è‘í‰ôìˆ(€€€€€€€½¹µ½ÕÍ••¹Ñ•Èô‰Í¡½İ…±Q¥À¡•Ù•¹Ğ°œ‘íÑ¥Á!Q51ôœ¤ˆ(€€€€€€€½¹µ½ÕÍ•±•…Ù”ô‰¡¥‘•…±Q¥À ¤ˆø(€€€€€€€€ñÍÁ…¸±…ÍÌô‰…°µ‰…ÈµÑáĞˆÍÑå±”ô‰½±½Èè‘íÑáÑôˆø‘í±…‰•±ôğ½ÍÁ…¸ø(€€€€€€ğ½‘¥Øù€ì(€€€ô((€€€É½İÌ€¬ô€ñ‘¥Ø±…ÍÌô‰…°µÉ½ÜˆÍÑå±”ô‰İ¥‘Ñ è‘íÑ½Ñ…±]õÁàˆø(€€€€€€ñ‘¥Ø±…ÍÌô‰…°µÉ½Üµ‰œˆø‘í‰•±±Íôğ½‘¥Øø(€€€€€€‘íÑ½‘…å1¥¹•ô(€€€€€€‘í‰…ÉÍô(€€€€ğ½‘¥Øù€ì(€ô((€‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% …°µ½¹Ñ•¹Ğœ¤¹¥¹¹•É!Q50€ô€(€€€€ñ‘¥Ø±…ÍÌô‰…°µİÉ…Àˆø(€€€€€€ñ‘¥Ø±…ÍÌô‰…°µ±…‰•±Ìˆø‘í±‰±ôğ½‘¥Øø(€€€€€€ñ‘¥Ø±…ÍÌô‰…°µÍÉ½±°ˆ¥ô‰…°µÍÉ½±°ˆø(€€€€€€€€ñ‘¥Ø±…ÍÌô‰…°µ¥¹¹•ÈˆÍÑå±”ô‰İ¥‘Ñ è‘íÑ½Ñ…±]õÁàˆø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰…°µµ½¹Ñ µ¡‘Èˆø‘íµ!‘Éôğ½‘¥Øø(€€€€€€€€€€ñ‘¥Ø±…ÍÌô‰…°µ‘…äµ¡‘Èˆø‘í‘!‘Éôğ½‘¥Øø(€€€€€€€€€€‘íÉ½İÍô(€€€€€€€€ğ½‘¥Øø(€€€€€€ğ½‘¥Øø(€€€€ğ½‘¥Øø(€€€€ñ‘¥ØÍÑå±”ô‰µ…É¥¸µÑ½ÀèÄÁÁàì™½¹ĞµÍ¥é”èÄÅÁàì½±½Èè‰‰ˆì‘¥ÍÁ±…äé™±•àì…ÀèÄÙÁàì™±•àµİÉ…ÀéİÉ…Àˆø(€€€€€€ñÍÁ…¸øñÍÁ…¸ÍÑå±”ô‰‘¥ÍÁ±…äé¥¹±¥¹”µ‰±½¬íİ¥‘Ñ èÄÉÁàí¡•¥¡ĞèÄÉÁàí‰½É‘•ÈµÉ…‘¥ÕÌèÍÁàí‰…­É½Õ¹èŒİŒÍ…•íÙ•ÉÑ¥…°µ…±¥¸éµ¥‘‘±”íµ…É¥¸µÉ¥¡ĞèÑÁàˆøğ½ÍÁ…¸û²
-ó²
-ó²^ƒ¶"°ğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸øñÍÁ…¸ÍÑå±”ô‰‘¥ÍÁ±…äé¥¹±¥¹”µ‰±½¬íİ¥‘Ñ èÄÉÁàí¡•¥¡ĞèÄÉÁàí‰½É‘•ÈµÉ…‘¥ÕÌèÍÁàí‰…­É½Õ¹èŒÁäĞààíÙ•ÉÑ¥…°µ…±¥¸éµ¥‘‘±”íµ…É¥¸µÉ¥¡ĞèÑÁàˆøğ½ÍÁ…¸û®š³®â3²Vƒ®.#²n£²ZĞğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸øñÍÁ…¸ÍÑå±”ô‰‘¥ÍÁ±…äé¥¹±¥¹”µ‰±½¬íİ¥‘Ñ èÄÉÁàí¡•¥¡ĞèÄÉÁàí‰½É‘•ÈµÉ…‘¥ÕÌèÍÁàí‰…­É½Õ¹èŒÌÜĞÄÔÄíÙ•ÉÑ¥…°µ…±¥¸éµ¥‘‘±”íµ…É¥¸µÉ¥¡ĞèÑÁàˆøğ½ÍÁ…¸û²ªÎ²Vô¿²^Ã²z”¿ªâÃ¶ ğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸øñÍÁ…¸ÍÑå±”ô‰‘¥ÍÁ±…äé¥¹±¥¹”µ‰±½¬íİ¥‘Ñ èÄÉÁàí¡•¥¡ĞèÄÉÁàí‰½É‘•ÈµÉ…‘¥ÕÌèÍÁàí‰…­É½Õ¹èŒäÑ„ÍˆàíÙ•ÉÑ¥…°µ…±¥¸éµ¥‘‘±”íµ…É¥¸µÉ¥¡ĞèÑÁàˆøğ½ÍÁ…¸û¶Ó².“²f®0ğ½ÍÁ…¸ø(€€€€€€ñÍÁ…¸øñÍÁ…¸ÍÑå±”ô‰‘¥ÍÁ±…äé¥¹±¥¹”µ‰±½¬íİ¥‘Ñ èÄÉÁàí¡•¥¡ĞèÄÉÁàí‰½É‘•ÈµÉ…‘¥ÕÌèÍÁàí‰…­É½Õ¹è˜Ôå”ÁˆíÙ•ÉÑ¥…°µ…±¥¸éµ¥‘‘±”íµ…É¥¸µÉ¥¡ĞèÑÁàˆøğ½ÍÁ…¸ûÂ~Nƒ²êc®šÃ®6S²‚²j¤¡MO®¾ã®NÇ®†t¤ğ½ÍÁ…¸ø(€€€€ğ½‘¥Øø(€€€€ñ‘¥Ø¥ô‰…°µÑ¥Àˆ±…ÍÌô‰…°µÑ½½±Ñ¥Àˆøğ½‘¥Øù€ì((€½¹ÍĞÍÉ½±°€ô‘½Õµ•¹Ğ¹•Ñ±•µ•¹Ñ	å% …°µÍÉ½±°œ¤ì(€¥˜€¡ÍÉ½±°€˜˜Ñ½‘…å%‘à€ø€À¤ì(€€€ÍÉll.scrollLeft = Math.max(0, todayIdx * DAY_W - scroll.clientWidth / 3);
+      const barW  = (ce - cs) * DAY_W - 3;
+      const barL  = cs * DAY_W + 1;
+      const label = `${r.guest}${r.note === 'ì´ë©”ì¼í™•ì¸' ? ' âœ‰' : ''}${r.note === 'ì˜ˆì•½ìš”ì²­ì¤‘' ? ' âš ï¸' : ''}${r.ss_missing ? ' ğŸ“…' : ''}`;
+      const amtStr = r.amt ? `â‚©${r.amt.toLocaleString('ko-KR')}` : '-';
+      const tipHTML = `${r.room} Â· ${r.guest}<br>${r.in} ~ ${r.out}<br>${r.p} Â· ${amtStr}${r.note ? '<br>' + r.note : ''}`;
+
+      bars += `<div class="cal-bar"
+        style="left:${barL}px; width:${barW}px; background:${bg};"
+        onmouseenter="showCalTip(event,'${tipHTML}')"
+        onmouseleave="hideCalTip()">
+        <span class="cal-bar-txt" style="color:${txt}">${label}</span>
+      </div>`;
+    }
+
+    rows += `<div class="cal-row" style="width:${totalW}px">
+      <div class="cal-row-bg">${bgCells}</div>
+      ${todayLine}
+      ${bars}
+    </div>`;
+  }
+
+  document.getElementById('cal-content').innerHTML = `
+    <div class="cal-wrap">
+      <div class="cal-labels">${lbl}</div>
+      <div class="cal-scroll" id="cal-scroll">
+        <div class="cal-inner" style="width:${totalW}px">
+          <div class="cal-month-hdr">${mHdr}</div>
+          <div class="cal-day-hdr">${dHdr}</div>
+          ${rows}
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:10px; font-size:11px; color:#bbb; display:flex; gap:16px; flex-wrap:wrap">
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#7c3aed;vertical-align:middle;margin-right:4px"></span>ì‚¼ì‚¼ì— íˆ¬</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#0d9488;vertical-align:middle;margin-right:4px"></span>ë¦¬ë¸Œì• ë‹ˆì›¨ì–´</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#374151;vertical-align:middle;margin-right:4px"></span>ì§ê³„ì•½/ì—°ì¥/ê¸°íƒ€</span>
+      <span><span style="display:inline-block;width:12px;height:12px;border-radius:3px;background:#94a3b8;vertical-align:middle;margin-right:4px"></span>í‡´ì‹¤ì™„ë£Œ</span>
+    </div>
+    <div id="cal-tip" class="cal-tooltip"></div>`;
+
+  const scroll = document.getElementById('cal-scroll');
+  if (scroll && todayIdx > 0) {
+    scroll.scrollLeft = Math.max(0, todayIdx * DAY_W - scroll.clientWidth / 3);
   }
 }
 
@@ -496,9 +520,6 @@ function hideCalTip() {
   if (tip) tip.style.display = 'none';
 }
 
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-// ì²­ì†Œ ì¼ì • ì²´í¬ë°•ìŠ¤ (localStorage ìœ ì§€)
-// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 function cleanKey(room, outDate) { return 'clean_' + room + '_' + outDate; }
 function toggleClean(cb) {
   try { localStorage.setItem(cb.dataset.key, cb.checked ? '1' : '0'); } catch(e) {}
@@ -576,25 +597,30 @@ function render() {
   const todayD   = d(todayStr);
   const k = kst();
   document.getElementById('hdr-meta').textContent =
-    `${k.getFullYear()}ë…„ ${k.getMonth()+1}ì›” ${k.getDate()}ì¼ (${WDAYS[k.getDay()]}) Â· ìŠ¤í”„ë ˆë“œì‹œíŠ¸ 9/9 ìŠ¤ëƒ…ìƒ· Â· 9/9 ì´ë©”ì¼ ë°˜ì˜`;
+    `${k.getFullYear()}í…„ ${k.getMonth()+1}ì›” ${k.getDate()}ì¼ (${WDAYS[k.getDay()]}) Â· ìŠ¤í”„ë ˆë“œì‹œíŠ¸ 9/11 ìŠ¤ëƒ…ìƒ· Â· 9/11 ì´ë©”ì¼ ë°˜ì˜`;
 
   // â”€â”€ Alerts â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   let aHTML = '';
+  const checkItems = RS.filter(r => r.note === 'í‡´ì‹¤ì™„ë£Œ_ì ê²€í•„ìš”');
+  if (checkItems.length) {
+    for (const c of checkItems) {
+      aHTML += `<div class="alert">
+        <div class="alert-title">âš¡ ê¸´ê¸‰ â€” í‡´ì‹¤ ì ê²€ ë¯¸ì™„ë£Œ</div>
+        <div class="alert-body"><b>${c.room} Â· ${c.guest}</b> (í‡´ì‹¤ì¼ ${c.out.slice(5)}) â€” ì‚¼ì‚¼ì— íˆ¬ ì•± â†’ [ê³„ì•½] â†’ [í‡´ì‹¤ ì ê²€í•˜ê¸°]</div>
+      </div>`;
+    }
+  }
   const reqItems = RS.filter(r => r.note === 'ì˜ˆì•½ìš”ì²­ì¤‘');
   if (reqItems.length) {
     for (const req of reqItems) {
       aHTML += `<div class="alert">
         <div class="alert-title">âš¡ ê¸´ê¸‰ â€” ì˜ˆì•½ ìš”ì²­ ì‘ë‹µ í•„ìš”</div>
-        <div class="alert-body"><b>${req.room} Â· ${req.in.slice(5)}~${req.out.slice(5)}</b> â€” ë¦¬ë¸Œì• ë‹ˆì›¨ì–´ ì˜ˆì•½ ìš”ì²­ (ê³„ì•½ë²ˆí˜¸: ${req.guest.replace(/[()]/g,'')}). í˜¸ìŠ¤íŠ¸ ì‚¬ì´íŠ¸ì—ì„œ í™•ì¸ í•„ìš”.</div>
+        <div class="alert-body"><b>${req.room} Â· ${req.in.slice(5)}~${req.out.slice(5)}</b> â€” ë¦¬ë¸Œì• ë‹ˆì›¨ì–´ ì˜ˆì•½ ìš”ì²­. í˜¸ìŠ¤íŠ¸ ì‚¬ì´íŠ¸ì—ì„œ í™•ì¸ í•„ìš”.</div>
       </div>`;
     }
   }
-  const emailOnlyMissing = RS.filter(r => r.ss_missing === true);
-  if (emailOnlyMissing.length > 0) {
-    aHTML += `<div class="alert" style="background:#fffbeb;border-color:#fde68a">
-      <div class="alert-title" style="color:#d97706">âš ï¸ ìŠ¤í”„ë ˆë“œì‹œíŠ¸ ë¯¸ë“±ë¡ ì˜ˆì•½ ${emailOnlyMissing.length}ê±´</div>
-      <div class="alert-body">ìº˜ë¦°ë”ì—ë§Œ ë“±ë¡ë¨ â€” ${emailOnlyMissing.map(r=>`<b>${r.guest}</b> ${r.room} ${r.in.slice(5)}~${r.out.slice(5)}`).join(', ')}. ìŠ¤í”„ë ˆë“œì‹œíŠ¸ ì—…ë°ì´íŠ¸ í•„ìš”.</div>
-    </div>`;
+  if (!checkItems.length && !reqItems.length) {
+    aHTML = '';
   }
   document.getElementById('alert-area').innerHTML = aHTML;
 
@@ -641,21 +667,15 @@ function render() {
       });
       for (const e of dayEvents) {
         const isIn = e.type === 'in';
-        const isMissingSS = e.ss_missing === true;
         const isReq  = e.note === 'ì˜ˆì•½ìš”ì²­ì¤‘';
-        const cls = isReq ? 'c-req' : (isMissingSS ? 'c-email' : (isIn ? 'c-in' : 'c-out'));
+        const cls = isReq ? 'c-req' : (isIn ? 'c-in' : 'c-out');
         const badge = isReq
           ? `<span class="badge b-req">ìš”ì²­ì¤‘</span>`
-          : isMissingSS
-            ? `<span class="badge b-email">${isIn ? 'ì…ì‹¤' : 'í‡´ì‹¤'} âœ‰</span>`
-            : isIn ? `<span class="badge b-in">ì…ì‹¤</span>` : `<span class="badge b-out">í‡´ì‹¤</span>`;
-        const note = isMissingSS ? ' <span style="font-size:10px;color:#d97706">(ìº˜ë¦°ë”ì „ìš©, ìŠ¤í”„ë ˆë“œì‹œíŠ¸ ë¯¸ë“±ë¡)</span>'
-                   : isReq       ? ' <span style="font-size:10px;color:#dc2626">(ì‘ë‹µê¸°í•œ í™•ì¸ í•„ìš”)</span>'
-                   : '';
+          : isIn ? `<span class="badge b-in">ì…ì‹¤</span>` : `<span class="badge b-out">í‡´ì‹¤</span>`;
         wHTML += `<div class="card ${cls}">
           ${badge}
           <div class="card-info">
-            <div class="card-title">${e.room} Â· ${e.guest}${note}</div>
+            <div class="card-title">${e.room} Â· ${e.guest}</div>
             <div class="card-sub">${platBadge(e.p)}&nbsp; ${fmt(e.in)} ~ ${fmt(e.out)}</div>
           </div>
           <div class="card-amt">${money(e.amt)}</div>
@@ -678,12 +698,10 @@ function render() {
     const isCan  = isCancelled(r);
     const isReq  = r.note === 'ì˜ˆì•½ìš”ì²­ì¤‘';
     const cls = isCan ? 'tr-cancel' : isAct ? 'tr-active' : isWk ? 'tr-week' : isReq ? 'tr-req' : '';
-    const noteHTML = r.ss_missing === true
-                   ? '<span style="color:#d97706;font-size:11px;font-weight:700">ğŸ“… ìº˜ë¦°ë”ì „ìš© Â· SSë¯¸ë“±ë¡</span>'
-                   : r.note === 'ì´ë©”ì¼í™•ì¸' ? '<span style="color:#888;font-size:11px">âœ‰ ì´ë©”ì¼í™•ì¸</span>'
+    const noteHTML = r.note === 'ì´ë©”ì¼í™•ì¸' ? '<span style="color:#888;font-size:11px">âœ‰ ì´ë©”ì¼í™•ì¸</span>'
                    : r.note === 'ì˜ˆì•½ìš”ì²­ì¤‘' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">âš ï¸ ì˜ˆì•½ìš”ì²­ì¤‘</span>'
-                   : r.note.startsWith('ì·¨ì†Œ')  ? `$¤an style="color:#dc2626;font-size:11px">${r.note}</span>`
-                   : r.note === 'í‡´ì‹¤ì™„ë£ƒŒ_ì ê²€í•„ìš”' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">âš¡ì ê²€í•„ìš”</span>'
+                   : r.note.startsWith('ì·¨ì†Œ')  ? `<span style="color:#dc2626;font-size:11px">${r.note}</span>`
+                   : r.note === 'í‡´ì‹¤ì™„ë£Œ_ì ê²€í•„ìš”' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">âš¡ì ê²€í•„ìš”</span>'
                    : r.note === 'í‡´ì‹¤ì™„ë£Œ' ? '<span style="color:#aaa;font-size:11px">í‡´ì‹¤ì™„ë£Œ</span>'
                    : '';
     tHTML += `<tr class="${cls}">
@@ -698,7 +716,7 @@ function render() {
   }
   tHTML += `</tbody></table></div>
     <div class="tbl-legend" style="margin-top:10px">
-      ğŸŸ¦ í˜„ì¬ ì…ì‹¤ì¤‘ &nbsp;ğŸŸ© 2ì£¼ ì´ë‚´ ì…ì‹¤ ì˜ˆì • &nbsp;âœ‰ ì´ë©”ì¼í™•ì¸ &nbsp;ğŸ“… ìº˜ë¦°ë”ì „ìš©(SSë¯¸ë“±ë¡)
+      ğŸŸ¦ í˜„ì¬ ì…ì‹¤ì¤‘ &nbsp;ğŸŸ© 2ì£¼ ì´ë‚´ ì…ì‹¤ ì˜ˆì • &nbsp;âœ‰ ì´ë©”ì¼í™•ì¸
     </div>`;
   document.getElementById('all-content').innerHTML = tHTML;
 }
