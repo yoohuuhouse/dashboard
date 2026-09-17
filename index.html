@@ -281,7 +281,7 @@ const RS = [
   {room:'여수남산',    in:'2026-06-24', out:'2026-06-30', guest:'윤도식',   p:'리브애니웨어', amt:425480,  note:'퇴실완료'},
   {room:'단양어상천',  in:'2026-06-27', out:'2026-07-11', guest:'허혜경',   p:'리브애니웨어', amt:597767,  note:'퇴실완료'},
   {room:'여수당머리',  in:'2026-06-27', out:'2026-07-05', guest:'윤여운',   p:'리브애니웨어', amt:643700,  note:'퇴실완료'},
-  // ── 7월 ───────────────────────────────────────────────────────────────
+  // ── 7월 ────────────────────────────────────────────────────────────────
   {room:'동해묵호',    in:'2026-07-12', out:'2026-07-19', guest:'임은지',   p:'리브애니웨어', amt:473266,  note:'퇴실완료'},
   {room:'영주순흥',    in:'2026-07-13', out:'2026-07-25', guest:'곽동한',   p:'직계약',       amt:536800,  note:'퇴실완료'},
   {room:'여수남산',    in:'2026-07-13', out:'2026-07-19', guest:'전승훈',   p:'삼삼엠투',    amt:425480,  note:'퇴실완료'},
@@ -318,7 +318,7 @@ const RS = [
   {room:'제주함덕',    in:'2026-08-17', out:'2026-08-31', guest:'정혜인',   p:'리브애니웨어', amt:1087500, note:'퇴실완료'},
   {room:'동해묵호',    in:'2026-08-23', out:'2026-08-29', guest:'이아미',   p:'리브애니웨어', amt:442886,  note:'퇴실완료'},
   {room:'여수남산',    in:'2026-08-24', out:'2026-09-14', guest:'김문길',   p:'리브애니웨어', amt:870059,  note:'퇴실완료'},
-  // ── 9-12월 ────────────────────────────────────────────────────────────
+  // ── 9-12월 ─────────────────────────────────────────────────────────────
   {room:'영주순흥',    in:'2026-09-01', out:'2026-10-26', guest:'유승아',   p:'삼삼엠투',    amt:1808290, note:'이메일확인'},
   {room:'제주함덕',    in:'2026-09-07', out:'2026-10-07', guest:'김종인',   p:'리브애니웨어', amt:1566540, note:'이메일확인'},
   {room:'봉화춘양',    in:'2026-09-17', out:'2026-10-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
@@ -335,7 +335,44 @@ const RS = [
   {room:'여수남산',    in:'2026-10-24', out:'2026-11-20', guest:'최공주',   p:'삼삼엠투',    amt:1158466, note:'이메일확인'},
   {room:'제주함덕',    in:'2026-11-08', out:'2026-12-08', guest:'송지나',   p:'리브애니웨어', amt:1779280, note:'이메일확인'},
   {room:'봉화춘양',    in:'2026-11-17', out:'2026-12-16', guest:'강동구',   p:'직계약',       amt:900000,  note:''},
-];set.panel;
+];
+
+const WDAYS = ['일','월','화','수','목','금','토'];
+function kst() {
+  const now = new Date();
+  const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+  return new Date(utc + 9 * 3600000);
+}
+function kstDateStr() {
+  const k = kst();
+  return `${k.getFullYear()}-${String(k.getMonth()+1).padStart(2,'0')}-${String(k.getDate()).padStart(2,'0')}`;
+}
+function d(s) { return new Date(s + 'T00:00:00+09:00'); }
+function fmt(s) {
+  const dt = d(s);
+  return `${dt.getMonth()+1}/${dt.getDate()}(${WDAYS[dt.getDay()]})`;
+}
+function money(n) { if (!n) return '-'; return '₩' + n.toLocaleString('ko-KR'); }
+function isCancelled(r) { return r.note.startsWith('취소'); }
+function isDone(r) { return r.note.startsWith('퇴실완료'); }
+function platBadge(p) {
+  if (p === '삼삼엠투')    return `<span class="badge b-33m2">삼삼엠투</span>`;
+  if (p === '리브애니웨어') return `<span class="badge b-live">리브애니웨어</span>`;
+  return `<span class="badge b-ext">${p}</span>`;
+}
+function platClass(p) {
+  if (p === '삼삼엠투')    return 'tc-33m2';
+  if (p === '리브애니웨어') return 'tc-live';
+  return 'tc-ext';
+}
+
+let alertsLoaded = false;
+let calRendered  = false;
+function switchTab(el) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  const name = el.dataset.panel;
   document.getElementById('panel-' + name).classList.add('active');
   if (name === 'alerts' && !alertsLoaded) loadAlerts();
   if (name === 'cal'    && !calRendered)  { calRendered = true; renderCalendar(); }
@@ -560,7 +597,7 @@ function render() {
   const todayD   = d(todayStr);
   const k = kst();
   document.getElementById('hdr-meta').textContent =
-    `${k.getFullYear()}끔 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 9/17 스냅샷 · 자동갱신 9/17`;
+    `${k.getFullYear()}년 ${k.getMonth()+1}월 ${k.getDate()}일 (${WDAYS[k.getDay()]}) · 스프레드시트 9/17 스냅샷 · 자동갱신 9/17`;
 
   // ── Alerts ──────────────────────────────────────────────────────────────
   let aHTML = '';
@@ -569,7 +606,7 @@ function render() {
     for (const c of checkItems) {
       aHTML += `<div class="alert">
         <div class="alert-title">⚡ 긴급 — 퇴실 점검 미완료</div>
-        <div class="alert-body"><b>${c.room} · ${c.guest}</b> (퇴실일 ${c.out.slice(5)}) — 삼삼엠투 앱 → [j��약] → [퇴실 점검하기]</div>
+        <div class="alert-body"><b>${c.room} · ${c.guest}</b> (퇴실일 ${c.out.slice(5)}) — 삼삼엠투 앱 → [계약] → [퇴실 점검하기]</div>
       </div>`;
     }
   }
@@ -663,7 +700,7 @@ function render() {
     const cls = isCan ? 'tr-cancel' : isAct ? 'tr-active' : isWk ? 'tr-week' : isReq ? 'tr-req' : '';
     const noteHTML = r.note === '이메일확인' ? '<span style="color:#888;font-size:11px">✉ 이메일확인</span>'
                    : r.note === '예약요청중' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚠️ 예약요청중</span>'
-                   : r.note.startsWith('취소')  ? `$����Ϸ '${r.n�e^.replaceAll('', '')}</span>`
+                   : r.note.startsWith('취소')  ? `<span style="color:#dc2626;font-size:11px">${r.note}</span>`
                    : r.note === '퇴실완료_점검필요' ? '<span style="color:#dc2626;font-size:11px;font-weight:700">⚡점검필요</span>'
                    : r.note === '퇴실완료' ? '<span style="color:#aaa;font-size:11px">퇴실완료</span>'
                    : '';
@@ -696,11 +733,11 @@ async function loadAlerts() {
     const data = r.structuredContent ?? JSON.parse(r.content?.[0]?.text ?? '{}');
     const threads = data.threads ?? [];
     if (!threads.length) { el.innerHTML = '<div class="empty">최근 알림 없음</div>'; return; }
-    const SKIPKKEYWORDS = ['퇴실점검', '보증금 반환', '보증금반환'];
+    const SKIPKSEYWORDS = ['퇴실점검', '보증금 반환', '보증금반환'];
     const filtered = threads.filter(t => {
       const subj = t.messages?.[0]?.subject ?? '';
       const snip = t.messages?.[0]?.snippet ?? '';
-      return !SKIPKKEYWORDS.some(k => subj.includes(k) || snip.includes(k));
+      return !SKIP_KEYWORDS.some(k => subj.includes(k) || snip.includes(k));
     });
     if (!filtered.length) { el.innerHTML = '<div class="empty">최근 알림 없음</div>'; return; }
     el.innerHTML = filtered.map(t => {
