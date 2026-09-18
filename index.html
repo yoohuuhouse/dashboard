@@ -6,17 +6,16 @@
 <title>유휴하우스 예약현황</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#111;font-size:14px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Apple SD Gothic Neo','Noto Sans KR',sans-serif;background:#f5f5f5;color:#111;font-size:14px}
 header{background:#1a1a2e;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 header h1{font-size:16px;font-weight:700}
 .updated{font-size:11px;color:#aaa}
-.tabs{display:flex;background:#fff;border-bottom:2px solid #e5e7eb;overflow-x:auto}
-.tab-btn{padding:10px 18px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:#6b7280;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px}
+.tabs{display:flex;background:#fff;border-bottom:2px solid #e5e7eb;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tab-btn{padding:10px 14px;border:none;background:transparent;cursor:pointer;font-size:13px;font-weight:600;color:#6b7280;white-space:nowrap;border-bottom:2px solid transparent;margin-bottom:-2px;flex-shrink:0}
 .tab-btn.active{color:#1a1a2e;border-bottom-color:#1a1a2e}
 .panel{display:none;padding:12px}
 .panel.active{display:block}
 .today-banner{background:#dbeafe;border:1px solid #93c5fd;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:13px;font-weight:600;color:#1e40af}
-.checkin-list,.checkout-list,.stay-list{margin-bottom:16px}
 .section-label{font-size:11px;font-weight:700;text-transform:uppercase;color:#9ca3af;margin-bottom:6px;letter-spacing:.5px}
 .res-card{background:#fff;border-radius:8px;border:1px solid #e5e7eb;padding:10px 12px;margin-bottom:6px;display:flex;align-items:center;gap:10px}
 .res-card .room-name{font-weight:700;font-size:13px;min-width:72px;color:#1a1a2e}
@@ -27,23 +26,46 @@ header h1{font-size:16px;font-weight:700}
 .badge-out{background:#fee2e2;color:#991b1b}
 .badge-stay{background:#e0e7ff;color:#3730a3}
 .badge-req{background:#fef3c7;color:#92400e}
-.badge-done{background:#f3f4f6;color:#6b7280}
 .res-table{width:100%;border-collapse:collapse;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.08)}
 .res-table th{background:#f9fafb;font-size:11px;font-weight:700;color:#6b7280;padding:8px 10px;text-align:left;border-bottom:1px solid #e5e7eb;white-space:nowrap}
 .res-table td{padding:8px 10px;border-bottom:1px solid #f3f4f6;font-size:12px;vertical-align:middle}
 .res-table tr:last-child td{border-bottom:none}
 .res-table tr:hover td{background:#f9fafb}
-.cal-grid{display:grid;gap:2px;margin-bottom:8px}
-.cal-room-label{font-size:10px;font-weight:700;color:#1a1a2e;display:flex;align-items:center;padding-right:4px;justify-content:flex-end}
-.cal-cell{height:28px;border-radius:3px;position:relative;overflow:hidden;cursor:default}
-.month-nav{display:flex;align-items:center;gap:8px;margin-bottom:10px}
-.month-nav button{background:#fff;border:1px solid #e5e7eb;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px}
-.month-nav span{font-size:14px;font-weight:700;min-width:80px;text-align:center}
 .empty-msg{padding:24px;text-align:center;color:#9ca3af;font-size:13px}
-@media(max-width:600px){
-  .res-table th:nth-child(4),.res-table td:nth-child(4),
-  .res-table th:nth-child(5),.res-table td:nth-child(5){display:none}
-}
+.clean-section{background:#f0fdf4;border:1.5px solid #bbf7d0;border-radius:12px;padding:14px 16px;margin-bottom:18px}
+.clean-section-hdr{font-size:13px;font-weight:700;color:#15803d;margin-bottom:10px}
+.clean-item{display:flex;align-items:center;gap:10px;padding:7px 10px;border-radius:8px;background:#fff;margin-bottom:6px;border:1px solid #d1fae5}
+.clean-item.done{opacity:.4}
+.clean-item input[type=checkbox]{width:16px;height:16px;accent-color:#16a34a;cursor:pointer;flex-shrink:0}
+.clean-room{font-size:13px;font-weight:700;color:#111;flex-shrink:0;min-width:70px}
+.clean-dates{font-size:12px;color:#444;flex:1}
+.clean-gap{font-size:11px;color:#888;white-space:nowrap}
+.clean-item.done .clean-room,.clean-item.done .clean-dates{text-decoration:line-through;color:#aaa}
+.cal-outer{border:1px solid #e5e7eb;border-radius:10px;overflow:hidden;display:flex}
+.cal-labels{flex-shrink:0;width:76px;background:#fff;border-right:2px solid #e5e7eb;z-index:2}
+.cal-label-hdr{height:50px;background:#f9fafb;border-bottom:1px solid #e5e7eb;display:flex;align-items:flex-end;padding:0 6px 6px;font-size:10px;font-weight:700;color:#888}
+.cal-label-row{height:34px;display:flex;align-items:center;padding:0 6px;font-size:11px;font-weight:700;color:#1a1a2e;border-bottom:1px solid #f3f4f6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cal-scroll{overflow-x:auto;flex:1;-webkit-overflow-scrolling:touch}
+.cal-inner{position:relative}
+.cal-month-hdr{display:flex;height:26px;border-bottom:1px solid #e5e7eb;background:#f9fafb}
+.cal-month-cell{flex-shrink:0;font-size:11px;font-weight:700;color:#444;padding:0 6px;line-height:26px;border-right:2px solid #d1d5db;white-space:nowrap;overflow:hidden;background:#f9fafb}
+.cal-day-hdr{display:flex;height:24px;border-bottom:1px solid #e5e7eb;background:#f9fafb}
+.cal-day-cell{flex-shrink:0;font-size:9px;text-align:center;line-height:24px;color:#aaa;border-right:1px solid #f0f0f0}
+.cal-day-cell.wkd{color:#fca5a5}
+.cal-day-cell.today-col{background:#dbeafe;color:#1d4ed8;font-weight:800}
+.cal-row{position:relative;height:34px;border-bottom:1px solid #f3f4f6}
+.cal-row-bg{display:flex;height:100%;position:absolute;inset:0}
+.cal-cell-bg{flex-shrink:0;height:100%;border-right:1px solid #f8f8f8}
+.cal-cell-bg.wkd{background:#fafafa}
+.cal-cell-bg.today-col{background:#eff6ff}
+.cal-cell-bg.month-end{border-right:2px solid #e5e7eb}
+.cal-bar{position:absolute;top:4px;height:26px;border-radius:4px;display:flex;align-items:center;padding:0 6px;overflow:hidden;white-space:nowrap;cursor:default;z-index:2;box-sizing:border-box}
+.cal-bar span{font-size:10px;font-weight:600;overflow:hidden;text-overflow:ellipsis}
+.cal-today-line{position:absolute;top:0;bottom:0;width:2px;background:#3b82f6;z-index:5;pointer-events:none}
+.cal-legend{font-size:11px;color:#aaa;margin-top:10px;display:flex;gap:14px;flex-wrap:wrap}
+.cal-legend span{display:flex;align-items:center;gap:4px}
+.cal-legend i{display:inline-block;width:12px;height:12px;border-radius:3px}
+@media(max-width:600px){.clean-gap{display:none}}
 </style>
 </head>
 <body>
@@ -52,152 +74,194 @@ header h1{font-size:16px;font-weight:700}
   <span class="updated" id="updated-label">로딩 중...</span>
 </header>
 <div class="tabs">
-  <button class="tab-btn active" onclick="showTab('week')">이번주일정</button>
-  <button class="tab-btn" onclick="showTab('all')">전체일정</button>
-  <button class="tab-btn" onclick="showTab('cal')">연간달력</button>
+  <button class="tab-btn active" onclick="showTab('week')">이번 주 일정</button>
+  <button class="tab-btn" onclick="showTab('clean')">🧹 청소 일정</button>
+  <button class="tab-btn" onclick="showTab('all')">전체 예약</button>
+  <button class="tab-btn" onclick="showTab('cal')">📅 연간 달력</button>
 </div>
 <div id="panel-week" class="panel active"></div>
+<div id="panel-clean" class="panel"></div>
 <div id="panel-all" class="panel"></div>
 <div id="panel-cal" class="panel"></div>
 <script>
-let RS = [], RS_CAL = [];
-let calYear = new Date().getFullYear();
-let calMonth = new Date().getMonth();
-
-function isCancelled(r) { return r.note && r.note.startsWith('취소'); }
-function isDone(r) { return r.note === '퇴실완료' || r.note === '퇴실완료_점검필요'; }
-function d(s) { return s ? new Date(s) : null; }
-function formatAmt(n) { if (!n) return ''; return '₩' + n.toLocaleString(); }
-function formatDate(s) {
-  if (!s) return '';
-  const dt = new Date(s);
-  return (dt.getMonth()+1) + '/' + dt.getDate();
+let RS=[],RS_CAL=[];
+const WDAYS=['일','월','화','수','목','금','토'];
+const MONTHS=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+function isCancelled(r){return r.note&&r.note.startsWith('취소');}
+function isDone(r){return r.note&&r.note.startsWith('퇴실완료');}
+function d(s){return s?new Date(s+'T00:00:00'):null;}
+function todayD(){const t=new Date();t.setHours(0,0,0,0);return t;}
+function todayStr(){const t=todayD();return t.getFullYear()+'-'+pad(t.getMonth()+1)+'-'+pad(t.getDate());}
+function pad(n){return String(n).padStart(2,'0');}
+function fmt(s){if(!s)return'';const dt=d(s);return(dt.getMonth()+1)+'/'+dt.getDate()+'('+WDAYS[dt.getDay()]+')';}
+function money(n){if(!n)return'-';return '₩'+n.toLocaleString('ko-KR');}
+function platShort(p){
+  if(!p)return'';
+  if(p.includes('삼삼')||p.includes('33'))return'삼삼엠투';
+  if(p.includes('리브'))return'리브';
+  if(p.includes('직'))return'직계약';
+  if(p.includes('연장'))return'연장';
+  return p;
 }
-function platformShort(p) {
-  if (!p) return '';
-  if (p.includes('삼삼') || p.includes('33')) return '삼';
-  if (p.includes('리브')) return '리';
-  if (p.includes('직')) return '직';
-  if (p.includes('연장')) return '연';
-  if (p.includes('홈')) return '홈';
-  return p.slice(0,2);
+function cleanKey(room,out){return'clean_'+room+'_'+out;}
+function isCleanDone(room,out){try{return localStorage.getItem(cleanKey(room,out))==='1';}catch(e){return false;}}
+function toggleClean(cb){
+  try{localStorage.setItem(cb.dataset.key,cb.checked?'1':'0');}catch(e){}
+  const item=cb.closest('.clean-item');
+  if(item)item.classList.toggle('done',cb.checked);
 }
-function showTab(name) {
-  document.querySelectorAll('.tab-btn').forEach((b,i) => {
-    b.classList.toggle('active', ['week','all','cal'][i] === name);
-  });
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
+function showTab(name){
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  const names=['week','clean','all','cal'];
+  document.querySelectorAll('.tab-btn')[names.indexOf(name)]?.classList.add('active');
+  document.getElementById('panel-'+name).classList.add('active');
+  if(name==='cal'&&!document.getElementById('panel-cal').dataset.rendered){renderCal();document.getElementById('panel-cal').dataset.rendered='1';}
+  if(name==='clean')renderClean();
 }
-function renderWeek() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const in14 = new Date(today); in14.setDate(in14.getDate()+14);
-  const active = RS.filter(r => !isCancelled(r) && !isDone(r) && d(r.in) <= today && d(r.out) > today);
-  const incoming = RS.filter(r => !isCancelled(r) && d(r.in) >= today && d(r.in) <= in14);
-  const outgoing = RS.filter(r => !isCancelled(r) && d(r.out) >= today && d(r.out) <= in14);
-  const todayStr = today.toLocaleDateString('ko-KR', {year:'numeric',month:'long',day:'numeric',weekday:'long'});
-  let html = '<div class="today-banner">📅 ' + todayStr + ' — 현재 체류 ' + active.length + '건</div>';
-  if (active.length) {
-    html += '<div class="section-label">체류 중</div>';
-    active.forEach(r => {
-      html += '<div class="res-card"><span class="badge badge-stay">체류</span>'
-        + '<span class="room-name">' + r.room + '</span>'
-        + '<span class="guest-info">' + r.guest + ' · ' + formatDate(r.in) + '~' + formatDate(r.out) + ' · ' + platformShort(r.p) + '</span>'
-        + '<span class="amt">' + formatAmt(r.amt) + '</span></div>';
-    });
+function renderWeek(){
+  const today=todayD();
+  const in14=new Date(today);in14.setDate(in14.getDate()+14);
+  const active=RS.filter(r=>!isCancelled(r)&&!isDone(r)&&d(r.in)<=today&&d(r.out)>today);
+  const incoming=RS.filter(r=>!isCancelled(r)&&d(r.in)>=today&&d(r.in)<=in14);
+  const outgoing=RS.filter(r=>!isCancelled(r)&&d(r.out)>=today&&d(r.out)<=in14);
+  const dayStr=today.toLocaleDateString('ko-KR',{year:'numeric',month:'long',day:'numeric',weekday:'long'});
+  let html='<div class="today-banner">📅 '+dayStr+' — 현재 체류 '+active.length+'건</div>';
+  function card(badge,cls,r,extra){
+    return '<div class="res-card"><span class="badge '+cls+'">'+badge+'</span>'
+      +'<span class="room-name">'+r.room+'</span>'
+      +'<span class="guest-info">'+(extra||'')+r.guest+' · '+fmt(r.in)+'~'+fmt(r.out)+' · '+platShort(r.p)+'</span>'
+      +'<span class="amt">'+money(r.amt)+'</span></div>';
   }
-  if (incoming.length) {
-    html += '<div class="section-label" style="margin-top:12px">14일내 입실</div>';
-    incoming.sort((a,b) => new Date(a.in)-new Date(b.in)).forEach(r => {
-      const nl = r.note === '예약요청중' ? '<span class="badge badge-req">요청중</span> ' : '';
-      html += '<div class="res-card"><span class="badge badge-in">입실</span>'
-        + '<span class="room-name">' + r.room + '</span>'
-        + '<span class="guest-info">' + nl + r.guest + ' · ' + formatDate(r.in) + '~' + formatDate(r.out) + ' · ' + platformShort(r.p) + '</span>'
-        + '<span class="amt">' + formatAmt(r.amt) + '</span></div>';
-    });
+  if(active.length){html+='<div class="section-label">체류 중 ('+active.length+'건)</div>';active.forEach(r=>html+=card('체류','badge-stay',r));}
+  if(incoming.length){
+    html+='<div class="section-label" style="margin-top:12px">14일내 입실 ('+incoming.length+'건)</div>';
+    incoming.sort((a,b)=>d(a.in)-d(b.in)).forEach(r=>{const ex=r.note==='예약요청중'?'<span class="badge badge-req">요청중</span> ':'';html+=card('입실','badge-in',r,ex);});
   }
-  if (outgoing.length) {
-    html += '<div class="section-label" style="margin-top:12px">14일내 퇴실</div>';
-    outgoing.sort((a,b) => new Date(a.out)-new Date(b.out)).forEach(r => {
-      const nl = r.note === '퇴실완료_점검필요' ? '<span class="badge" style="background:#fee2e2;color:#991b1b">점검필요</span> ' : '';
-      html += '<div class="res-card"><span class="badge badge-out">퇴실</span>'
-        + '<span class="room-name">' + r.room + '</span>'
-        + '<span class="guest-info">' + nl + r.guest + ' · ' + formatDate(r.in) + '~' + formatDate(r.out) + ' · ' + platformShort(r.p) + '</span>'
-        + '<span class="amt">' + formatAmt(r.amt) + '</span></div>';
-    });
+  if(outgoing.length){
+    html+='<div class="section-label" style="margin-top:12px">14일내 퇴실 ('+outgoing.length+'건)</div>';
+    outgoing.sort((a,b)=>d(a.out)-d(b.out)).forEach(r=>{const ex=r.note==='퇴실완료_점검필요'?'<span class="badge" style="background:#fee2e2;color:#991b1b">점검필요</span> ':'';html+=card('퇴실','badge-out',r,ex);});
   }
-  if (!active.length && !incoming.length && !outgoing.length) html += '<div class="empty-msg">14일내 일정 없음</div>';
-  document.getElementById('panel-week').innerHTML = html;
+  if(!active.length&&!incoming.length&&!outgoing.length)html+='<div class="empty-msg">14일내 일정 없음</div>';
+  document.getElementById('panel-week').innerHTML=html;
 }
-function renderAll() {
-  const today = new Date(); today.setHours(0,0,0,0);
-  const sorted = [...RS].filter(r => !isCancelled(r) && d(r.out) >= today).sort((a,b) => new Date(a.in)-new Date(b.in));
-  if (!sorted.length) { document.getElementById('panel-all').innerHTML = '<div class="empty-msg">예정 예약 없음</div>'; return; }
-  let html = '<table class="res-table"><thead><tr><th>객실</th><th>입실</th><th>퇴실</th><th>예약자</th><th>플랫폼</th><th>금액</th><th>비고</th></tr></thead><tbody>';
-  sorted.forEach(r => {
-    const nl = r.note ? '<span class="badge" style="background:#f3f4f6;color:#374151">' + r.note + '</span>' : '';
-    html += '<tr><td><strong>' + r.room + '</strong></td><td>' + r.in + '</td><td>' + r.out + '</td><td>' + r.guest + '</td><td>' + r.p + '</td><td>' + formatAmt(r.amt) + '</td><td>' + nl + '</td></tr>';
-  });
-  html += '</tbody></table>';
-  document.getElementById('panel-all').innerHTML = html;
-}
-function renderCal() {
-  const panel = document.getElementById('panel-cal');
-  const year = calYear, month = calMonth;
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-  const today = new Date(); today.setHours(0,0,0,0);
-  const rooms = [...new Set(RS_CAL.filter(r => !isCancelled(r)).map(r => r.room))].sort();
-  const monthNames = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
-  let html = '<div class="month-nav">'
-    + '<button onclick="calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCal()">◀</button>'
-    + '<span>' + year + '년 ' + monthNames[month] + '</span>'
-    + '<button onclick="calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCal()">▶</button></div>';
-  const dayNames = ['월','화','수','목','금','토','일'];
-  html += '<div style="overflow-x:auto"><div>';
-  html += '<div style="display:grid;grid-template-columns:64px repeat(' + daysInMonth + ',28px);gap:1px;margin-bottom:2px"><div></div>';
-  for (let day = 1; day <= daysInMonth; day++) {
-    const dt = new Date(year, month, day);
-    const dow = (dt.getDay()+6)%7;
-    const isToday = dt.getTime() === today.getTime();
-    const color = isToday ? '#ef4444' : dow===6 ? '#ef4444' : dow===5 ? '#3b82f6' : '#6b7280';
-    html += '<div style="text-align:center;font-size:9px;font-weight:700;color:' + color + '">' + day + '<br>' + dayNames[dow] + '</div>';
+function renderClean(){
+  const today=todayD();
+  const week7=new Date(today);week7.setDate(week7.getDate()+7);
+  const nonCan=RS.filter(r=>!isCancelled(r));
+  const tasks=[];
+  for(const r of nonCan){
+    const outDate=d(r.out);
+    if(outDate<today)continue;
+    const next=nonCan.filter(s=>s.room===r.room&&s!==r&&d(s.in)>=outDate).sort((a,b)=>d(a.in)-d(b.in))[0];
+    const gapDays=next?Math.round((d(next.in)-outDate)/86400000):null;
+    tasks.push({room:r.room,out:r.out,nextIn:next?next.in:null,gapDays,outGuest:r.guest,inGuest:next?next.guest:null,isThisWeek:outDate<=week7});
   }
-  html += '</div>';
-  rooms.forEach(room => {
-    const roomRS = RS_CAL.filter(r => r.room === room && !isCancelled(r));
-    html += '<div style="display:grid;grid-template-columns:64px repeat(' + daysInMonth + ',28px);gap:1px;margin-bottom:1px">';
-    html += '<div style="font-size:10px;font-weight:700;color:#1a1a2e;display:flex;align-items:center;justify-content:flex-end;padding-right:4px;overflow:hidden">' + room + '</div>';
-    for (let day = 1; day <= daysInMonth; day++) {
-      const dt = new Date(year, month, day); dt.setHours(0,0,0,0);
-      const bk = roomRS.find(r => { const i=new Date(r.in); i.setHours(0,0,0,0); const o=new Date(r.out); o.setHours(0,0,0,0); return dt>=i && dt<o; });
-      const isToday = dt.getTime() === today.getTime();
-      let cellColor = '#f9fafb', label = '', border = '1px solid #e5e7eb';
-      if (bk) {
-        const inD = new Date(bk.in); inD.setHours(0,0,0,0);
-        if (dt.getTime() === inD.getTime()) { cellColor='#10b981'; label=bk.guest.slice(0,3); border='1px solid transparent'; }
-        else { cellColor='#818cf8'; border='1px solid transparent'; }
-      }
-      const todayOutline = isToday ? 'outline:2px solid #ef4444;outline-offset:-1px;' : '';
-      const title = bk ? bk.guest + ' ' + bk.in + '~' + bk.out : '';
-      html += '<div style="height:22px;border-radius:2px;background:' + cellColor + ';border:' + border + ';' + todayOutline + 'overflow:hidden;font-size:8px;color:#fff;font-weight:700;line-height:22px;padding:0 2px" title="' + title + '">' + label + '</div>';
+  tasks.sort((a,b)=>a.out.localeCompare(b.out));
+  const thisWeek=tasks.filter(t=>t.isThisWeek);
+  const later=tasks.filter(t=>!t.isThisWeek);
+  function group(list,title){
+    if(!list.length)return'';
+    let h='<div class="clean-section"><div class="clean-section-hdr">'+title+'</div>';
+    for(const t of list){
+      const done=isCleanDone(t.room,t.out);
+      const key=cleanKey(t.room,t.out);
+      let dateLabel,gapLabel;
+      if(t.gapDays===null){dateLabel=fmt(t.out)+' 이후';gapLabel='다음 입실 미정';}
+      else if(t.gapDays===0){dateLabel=fmt(t.out)+' 당일';gapLabel=t.outGuest+' 퇴실 → '+t.inGuest+' 입실';}
+      else{dateLabel=fmt(t.out)+'~'+fmt(t.nextIn);gapLabel=t.gapDays+'일 · '+t.outGuest+' → '+t.inGuest;}
+      h+='<div class="clean-item'+(done?' done':'')+'"><input type="checkbox" data-key="'+key+'" '+(done?'checked':'')+' onchange="toggleClean(this)">'
+        +'<span class="clean-room">'+t.room+'</span>'
+        +'<span class="clean-dates">'+dateLabel+'</span>'
+        +'<span class="clean-gap">'+gapLabel+'</span></div>';
     }
-    html += '</div>';
-  });
-  html += '</div></div>';
-  panel.innerHTML = html;
+    return h+'</div>';
+  }
+  let html=group(thisWeek,'🧹 이번 주 청소 (향후 7일)');
+  if(!thisWeek.length)html='<div style="padding:12px;color:#6ee7b7;font-size:13px">이번 주 청소 일정 없음</div>';
+  document.getElementById('panel-clean').innerHTML=html+group(later,'📅 이후 청소 일정');
 }
-function renderAll3() { renderWeek(); renderAll(); renderCal(); }
-fetch('./data.json?_=' + Date.now())
-  .then(r => { if (!r.ok) throw new Error('data.json ' + r.status); return r.json(); })
-  .then(data => {
-    RS = data.reservations || [];
-    RS_CAL = RS;
-    document.getElementById('updated-label').textContent = '업데이트: ' + (data.updated || '?');
-    renderAll3();
+function renderAll(){
+  const today=todayD();
+  const sorted=[...RS].filter(r=>!isCancelled(r)&&d(r.out)>=today).sort((a,b)=>d(a.in)-d(b.in));
+  if(!sorted.length){document.getElementById('panel-all').innerHTML='<div class="empty-msg">예정 예약 없음</div>';return;}
+  let h='<div style="overflow-x:auto"><table class="res-table"><thead><tr><th>객실</th><th>입실</th><th>퇴실</th><th>예약자</th><th>플랫폼</th><th>금액</th><th>비고</th></tr></thead><tbody>';
+  sorted.forEach(r=>{
+    const noteHTML=r.note?'<span class="badge" style="background:#f3f4f6;color:#374151;font-size:10px">'+r.note+'</span>':'';
+    const isAct=d(r.in)<=today&&d(r.out)>today&&!isDone(r);
+    h+='<tr style="'+(isAct?'background:#eff6ff':'')+'"><td><strong>'+r.room+'</strong></td><td>'+r.in+'</td><td>'+r.out+'</td><td>'+r.guest+'</td><td>'+r.p+'</td><td>'+money(r.amt)+'</td><td>'+noteHTML+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  document.getElementById('panel-all').innerHTML=h;
+}
+function renderCal(){
+  const YEAR=new Date().getFullYear();
+  const DAY_W=26;
+  const ROOMS_ORDER=['속초금호','영주순흥','동해묵호','여수당머리','단양어상천','단양단성','봉화춘양','여수남산','제주함덕','전주완산'];
+  const extraRooms=[...new Set(RS_CAL.map(r=>r.room))].filter(r=>!ROOMS_ORDER.includes(r));
+  const ROOMS=[...ROOMS_ORDER,...extraRooms].filter(room=>RS_CAL.some(r=>r.room===room));
+  const days=[];
+  for(let m=0;m<12;m++){
+    const dim=new Date(YEAR,m+1,0).getDate();
+    for(let day=1;day<=dim;day++){days.push({m,day,dow:new Date(YEAR,m,day).getDay(),isLast:day===dim});}
+  }
+  const totalW=days.length*DAY_W;
+  const ts=todayStr();
+  function dayIdx(s){const dt=new Date(s+'T00:00:00');return Math.round((dt-new Date(YEAR,0,1))/86400000);}
+  function barColor(r){
+    if(isDone(r))return{bg:'#94a3b8',txt:'#fff'};
+    if(r.p&&(r.p.includes('삼삼')||r.p.includes('33')))return{bg:'#7c3aed',txt:'#fff'};
+    if(r.p&&r.p.includes('리브'))return{bg:'#0d9488',txt:'#fff'};
+    return{bg:'#374151',txt:'#fff'};
+  }
+  let lbl='<div class="cal-label-hdr">지점</div>';
+  ROOMS.forEach(room=>{lbl+='<div class="cal-label-row" title="'+room+'">'+room+'</div>';});
+  let mHdr='';
+  for(let m=0;m<12;m++){const dim=new Date(YEAR,m+1,0).getDate();mHdr+='<div class="cal-month-cell" style="width:'+(dim*DAY_W)+'px">'+MONTHS[m]+'</div>';}
+  let dHdr='';
+  days.forEach(({m,day,dow})=>{
+    const ds=YEAR+'-'+pad(m+1)+'-'+pad(day);
+    const cls='cal-day-cell'+(dow===0||dow===6?' wkd':'')+(ds===ts?' today-col':'');
+    dHdr+='<div class="'+cls+'" style="width:'+DAY_W+'px">'+day+'</div>';
+  });
+  const todayIdx=dayIdx(ts);
+  let rows='';
+  ROOMS.forEach(room=>{
+    let bgCells='';
+    days.forEach(({m,day,dow,isLast})=>{
+      const ds=YEAR+'-'+pad(m+1)+'-'+pad(day);
+      const cls='cal-cell-bg'+(dow===0||dow===6?' wkd':'')+(ds===ts?' today-col':'')+(isLast?' month-end':'');
+      bgCells+='<div class="'+cls+'" style="width:'+DAY_W+'px"></div>';
+    });
+    const todayLine=todayIdx>=0&&todayIdx<days.length?'<div class="cal-today-line" style="left:'+(todayIdx*DAY_W+DAY_W/2)+'px"></div>':'';
+    let bars='';
+    RS_CAL.filter(r=>r.room===room&&!isCancelled(r)).forEach(r=>{
+      const s=dayIdx(r.in),e=dayIdx(r.out);
+      const cs=Math.max(0,s),ce=Math.min(days.length,e);
+      if(ce<=cs)return;
+      const{bg,txt}=barColor(r);
+      const label=r.guest+(r.note==='이메일확인'?' ✉':'')+(r.note==='예약요청중'?' ⚠':'');
+      const tip=r.room+' · '+r.guest+' | '+r.in+'~'+r.out+' | '+r.p+' | '+money(r.amt);
+      bars+='<div class="cal-bar" style="left:'+(cs*DAY_W+1)+'px;width:'+((ce-cs)*DAY_W-2)+'px;background:'+bg+'" title="'+tip+'"><span style="color:'+txt+'">'+label+'</span></div>';
+    });
+    rows+='<div class="cal-row" style="width:'+totalW+'px"><div class="cal-row-bg">'+bgCells+'</div>'+todayLine+bars+'</div>';
+  });
+  document.getElementById('panel-cal').innerHTML=
+    '<div class="cal-outer"><div class="cal-labels">'+lbl+'</div><div class="cal-scroll" id="cal-scroll"><div class="cal-inner" style="width:'+totalW+'px"><div class="cal-month-hdr">'+mHdr+'</div><div class="cal-day-hdr">'+dHdr+'</div>'+rows+'</div></div></div>'
+    +'<div class="cal-legend"><span><i style="background:#7c3aed"></i>삼삼엠투</span><span><i style="background:#0d9488"></i>리브애니웨어</span><span><i style="background:#374151"></i>직계약/연장</span><span><i style="background:#94a3b8"></i>퇴실완료</span></div>';
+  const scroll=document.getElementById('cal-scroll');
+  if(scroll&&todayIdx>0)scroll.scrollLeft=Math.max(0,todayIdx*DAY_W-scroll.clientWidth/3);
+}
+fetch('./data.json?_='+Date.now())
+  .then(r=>{if(!r.ok)throw new Error('data.json '+r.status);return r.json();})
+  .then(data=>{
+    RS=data.reservations||[];RS_CAL=RS;
+    document.getElementById('updated-label').textContent='업데이트: '+(data.updated||'?');
+    renderWeek();renderAll();
   })
-  .catch(err => {
-    document.getElementById('updated-label').textContent = '오류: ' + err.message;
-    document.getElementById('panel-week').innerHTML = '<div class="empty-msg">데이터 로드 실패: ' + err.message + '</div>';
+  .catch(err=>{
+    document.getElementById('updated-label').textContent='오류: '+err.message;
+    document.getElementById('panel-week').innerHTML='<div class="empty-msg">데이터 로드 실패: '+err.message+'</div>';
   });
 </script>
 </body>
