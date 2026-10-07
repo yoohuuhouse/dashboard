@@ -236,7 +236,7 @@ function renderCal(){
     const todayLine=todayIdx>=0&&todayIdx<days.length?'<div class="cal-today-line" style="left:'+(todayIdx*DAY_W+DAY_W/2)+'px"></div>':'';
     let bars='';
     RS_CAL.filter(r=>r.room===room&&!isCancelled(r)).forEach(r=>{
-      const s=dayIdx(r.in),e=dayIdx(r.out);
+      const s=dayIdx(r.in),e=dayIdx(r.out)+1;
       const cs=Math.max(0,s),ce=Math.min(days.length,e);
       if(ce<=cs)return;
       const{bg,txt}=barColor(r);
