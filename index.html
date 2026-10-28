@@ -201,7 +201,7 @@ function renderCal(){
   const extraRooms=[...new Set(RS_CAL.map(r=>r.room))].filter(r=>!ROOMS_ORDER.includes(r));
   const ROOMS=[...ROOMS_ORDER,...extraRooms].filter(room=>RS_CAL.some(r=>r.room===room));
   const days=[];
-  for(let m=0;m<12;m++){
+  for(let m=0;m<24;m++){
     const dim=new Date(YEAR,m+1,0).getDate();
     for(let day=1;day<=dim;day++){days.push({m,day,dow:new Date(YEAR,m,day).getDay(),isLast:day===dim});}
   }
@@ -217,10 +217,10 @@ function renderCal(){
   let lbl='<div class="cal-label-hdr">지점</div>';
   ROOMS.forEach(room=>{lbl+='<div class="cal-label-row" title="'+room+'">'+room+'</div>';});
   let mHdr='';
-  for(let m=0;m<12;m++){const dim=new Date(YEAR,m+1,0).getDate();mHdr+='<div class="cal-month-cell" style="width:'+(dim*DAY_W)+'px">'+MONTHS[m]+'</div>';}
+  for(let m=0;m<24;m++){const dim=new Date(YEAR,m+1,0).getDate();mHdr+='<div class="cal-month-cell" style="width:'+(dim*DAY_W)+'px">'+((m%12===0)?(YEAR+Math.floor(m/12))+'년 ':'')+MONTHS[m%12]+'</div>';}
   let dHdr='';
   days.forEach(({m,day,dow})=>{
-    const ds=YEAR+'-'+pad(m+1)+'-'+pad(day);
+    const ds=(YEAR+Math.floor(m/12))+'-'+pad(m%12+1)+'-'+pad(day);
     const cls='cal-day-cell'+(dow===0||dow===6?' wkd':'')+(ds===ts?' today-col':'');
     dHdr+='<div class="'+cls+'" style="width:'+DAY_W+'px">'+day+'</div>';
   });
@@ -229,7 +229,7 @@ function renderCal(){
   ROOMS.forEach(room=>{
     let bgCells='';
     days.forEach(({m,day,dow,isLast})=>{
-      const ds=YEAR+'-'+pad(m+1)+'-'+pad(day);
+      const ds=(YEAR+Math.floor(m/12))+'-'+pad(m%12+1)+'-'+pad(day);
       const cls='cal-cell-bg'+(dow===0||dow===6?' wkd':'')+(ds===ts?' today-col':'')+(isLast?' month-end':'');
       bgCells+='<div class="'+cls+'" style="width:'+DAY_W+'px"></div>';
     });
